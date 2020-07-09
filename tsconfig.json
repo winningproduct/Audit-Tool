@@ -1,0 +1,32 @@
+{
+  "compilerOptions": {
+    "lib": ["es2015", "es2017"],
+    "target": "es6",
+    "types": ["node", "jest"],
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "noUnusedParameters": true,
+    "noUnusedLocals": true,
+    "outDir": ".build",
+    "strict": true,
+    "declaration": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "sourceMap": true,
+    "strictNullChecks": true,
+    "preserveConstEnums": true,
+    "rootDir": "./",
+    "baseUrl": "./src",
+    "paths": {
+      "@repos/*": ["shared/abstract/repos/*"],
+      "@util/*": ["shared/util/*"],
+      "@models/*": ["shared/models/*"],
+      "@products/*": ["products/*"],
+      "@questions/*": ["questions/*"],
+      "@root/*": ["../*"]
+    }
+  },
+  "include": ["./src/**/*.ts"],
+  "exclude": ["node_modules"],
+}
