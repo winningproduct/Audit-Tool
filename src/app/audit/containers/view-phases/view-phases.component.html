@@ -1,0 +1,48 @@
+<div class="row mt-3" *ngIf="loader">
+  <div class="col-12 col-sm-12">
+    <nav aria-label="breadcrumb" *ngIf="products != null">
+      <ol class="breadcrumb bg-white px-0">
+        <li class="breadcrumb-item"><a [routerLink]="['/audit/products/']">Product</a></li>
+        <li class="breadcrumb-item active" aria-current="page">{{products[0].name}}</li>
+      </ol>
+    </nav>
+  </div>
+  
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12 phaseDiv mt-5">
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <div class="col-2 col-sm-2 d-flex align-items-center justify-content-center">
+          <img src="../assets/img/red-flag.png" style="width:64px; height:auto; margin-left: 37px;"/>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12 phaseWrapper">
+          <app-phase-tile [productId]="id" [phase]="phase" *ngFor="let phase of phases" class="d-flex flex-column col-12 col-sm-12"></app-phase-tile>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-12 col-sm-12">
+        <div class="col-2 col-sm-2 d-flex align-items-center justify-content-center flex-column">
+          <div style="height:150px; border-left:3px solid #d6dade; position: relative; left: -2px;"></div>
+          <img src="../assets/img/chosen.png" style="width:64px; height:auto;"/>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div  *ngIf="!loader" class="" style="width:100%; height:calc(100vh - 56px); position: relative; display: flex; align-items: center; justify-content: center;">
+  <ngx-spinner 
+  bdOpacity = 1
+  bdColor = "rgba(255,255,255,1)"
+  size = "medium"
+  color = "#cf46ff"
+  type = "fire"
+  [fullScreen] = "false"
+  >
+  </ngx-spinner>
+</div>
+

@@ -1,0 +1,21 @@
+<nav class="mainNav navbar navbar-expand-lg navbar-light border-bottom px-0">
+    <a class="navbar-brand" routerLink="/audit/products">
+        <img alt = "WPO Logo" src="../assets/img/logo@2x.png" width="auto" height="24px" />
+    </a>
+    <ul class="navbar-nav ml-auto flex-row">
+        <li class="nav-item active">
+            <div class="btn-group" dropdown>
+                <a dropdownToggle type="button" class="btn btn btn-link px-0 py-0">
+                    <ngx-avatar *ngIf="userName != null" size="32" bgColor=#8e44ad name="{{userName}}"></ngx-avatar>
+                    <ngx-avatar *ngIf="userName == null" size="32" bgColor=#8e44ad name="{{userName}}"></ngx-avatar>
+                </a>
+                <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li role="menuitem"><a class="dropdown-item" (click)="logOut()">Logout</a></li>
+                </ul>
+            </div>
+        </li>
+        
+    </ul>
+</nav>
+
+

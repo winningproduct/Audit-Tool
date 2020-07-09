@@ -1,0 +1,32 @@
+<ngx-spinner
+bdOpacity = 1
+bdColor = "#fff"
+size = "medium"
+color = "#cf46ff"
+type = "fire"
+[fullScreen] = "true"
+>
+</ngx-spinner>
+<div class="card product-tile product-tile-h bg-white mx-0 px-3 py-3">
+  <a [routerLink]="['/audit/products/', product.id, 'phases']" class="d-flex flex-row">
+    <div class="card-header d-flex flex-row justify-content-between align-items-start bg-white border-0 px-0 py-0 mr-4">
+      <div style="position: relative;">
+        <div class="progress-circle progress-{{score}}"><span>{{score}}%</span></div>
+        <!-- <ngx-avatar size="40"  bgColor=#5c6d7e name="{{product.name}}"></ngx-avatar> -->
+      </div>
+    </div>
+
+    <div class="card-body px-0 py-0">
+      <p class="h6 text-dark mb-1">{{ product.name }}</p>
+      <p class="mb-2 text-dark text-justify">{{ product.description }}</p>
+      <div class="facePile d-flex flex-row">
+        <div *ngFor="let user of firstUsers , let i = index" class="facePile-more d-flex align-items-center justify-content-center">      
+          <ngx-avatar size="24" bgColor="{{colors[i]}}" name="{{user.firstName}} {{user.lastName}}" tooltip="{{user.firstName}} {{user.lastName}}" ></ngx-avatar>
+        </div>
+        <div *ngIf="userCount" class="facePile-more d-flex align-items-center justify-content-center">
+          <ngx-avatar size="24" bgColor=#1abc9c name="+ {{userCount}}" tooltip="+{{userCount}} more"></ngx-avatar>
+        </div>
+      </div>
+    </div>
+  </a>
+</div>

@@ -1,0 +1,22 @@
+
+<div *ngIf="!isDay">
+    <a class="px-3 py-2 d-flex flex-row justify-content-between versionsDateTileComponent" (click)="getEvidenceByDate(innerDate)"
+    [attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+        <div class="d-flex flex-row">
+            <fa-icon [icon]="faSpinner" *ngIf="getVersions" class="text-blask fa-spin mr-3"></fa-icon>
+            <p class="mb-0 lead text-14 font-weight-normal">{{innerDate}}</p>
+        </div>
+        <fa-icon [icon]="faCaretDown"></fa-icon>
+    </a>
+    <div id="collapseBasic" [collapse]="isCollapsed">
+        <app-versions-date-detail-tile  *ngFor = "let versionDetail of versionDetails" [versionDetail] = "versionDetail" [productId]="productId" [questionId]="questionId"></app-versions-date-detail-tile>
+    </div>
+</div>
+<div *ngIf="isDay">
+    <app-versions-date-detail-tile  *ngFor = "let versionDetail of versionDetails" [versionDetail] = "versionDetail" [productId]="productId" [questionId]="questionId"></app-versions-date-detail-tile>
+</div>
+
+
+
+
+

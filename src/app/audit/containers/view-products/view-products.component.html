@@ -1,0 +1,74 @@
+<div class="row" *ngIf="loader">
+  <div class="col-12 col-sm-12 mt-5 mb-5">
+    <div class="card border-0 bg-light">
+      <div class="card-body">
+        <div class="d-flex flex-row align-items-start">
+          <div class="d-flex flex-row">
+            <div class="mr-4">
+              <img src="../assets/img/agenda.png" height="64px" width="auto"/>
+            </div>
+            <div>
+              <p class="h6">Welcome {{userName}}</p>
+              <p>Make your winning product today!</p>
+              <a class="alert-link" href="https://www.winningproduct.com/" target="blank">More Info</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12">
+    <tabset>
+      <tab heading="Active Products" id="tab1">
+        <div class="row d-flex mt-4">
+          <div class="col-12 col-sm-12">
+            <div class="card-deck">
+              <app-product-tile
+                [product]="product"
+                *ngFor="let product of products"
+                class="col col-12 col-sm-12 mb-3"
+              ></app-product-tile>
+              <alert type="info w-100" *ngIf="products == null">
+                <strong>No Products Found</strong> Please contact Administrator
+              </alert>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Archived Products">
+        <div class="row d-flex mt-4">
+          <div class="col-12 col-sm-12">
+            <div class="card border-0 bg-light">
+              <div class="card-body">
+                <div class="d-flex flex-row align-items-start">
+                  <div class="d-flex flex-row">
+                    <div class="mr-4">
+                      <img src="../assets/img/box.png" height="64px" width="auto"/>
+                    </div>
+                    <div>
+                      <p class="h6">It's Empty In here</p>
+                      <p>You dont have any archived products yet, once you archive an product it will appear in here.Feel like some thing is missing? drop us a message</p>
+                      <a class="alert-link" target="blank">Report Issue</a>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+    </tabset>
+  </div>
+</div>
+
+<div  *ngIf="!loader" class="" style="width:100%; height:calc(100vh - 56px); position: relative; display: flex; align-items: center; justify-content: center;">
+  <ngx-spinner 
+  bdOpacity = 1
+  bdColor = "rgba(255,255,255,1)"
+  size = "medium"
+  color = "#cf46ff"
+  type = "fire"
+  [fullScreen] = "false"
+  >
+  </ngx-spinner>
+</div>

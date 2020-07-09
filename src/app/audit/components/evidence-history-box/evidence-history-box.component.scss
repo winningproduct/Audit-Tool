@@ -1,0 +1,10 @@
+@import "../../../../assets/scss/theme";
+
+.evidenceContent{
+    height: calc(95vh - 56px);
+    overflow-y: scroll;
+}
+
+.button{
+    margin: 2px;
+}

@@ -1,0 +1,14 @@
+@import "../../../../assets/scss/theme";
+
+.text-14{
+    font-size: 14px;
+    line-height: 20px;
+}
+
+.versionsDateTileComponent {
+    &:hover{
+        background-color: $gray-100;
+    }
+    border-left: 1px solid rgba(44, 62, 80, 0.125);
+    border-bottom: 1px solid rgba(44, 62, 80, 0.125);
+}

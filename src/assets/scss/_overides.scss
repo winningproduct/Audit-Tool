@@ -1,0 +1,60 @@
+// tab overides 
+
+// bootstrap tab overides
+.nav-tabs{
+    border-bottom-color: transparent;
+
+    .nav-link{
+        &.active{
+            background-color: #f9f5fb !important;
+            color: #8e44ad !important;
+            border-radius: 0px;
+            border-bottom: 2px solid #8e44ad;
+            border-top-color: transparent;
+            border-left-color: transparent;
+            border-right-color: transparent;
+        }
+
+        &:hover{
+            border-color:transparent;
+        }
+
+    }
+
+}
+
+// bootstrap carousel overide 
+::ng-deep.carousel-inner{
+    .active{
+        margin-right:0px;
+    }
+}
+
+::ng-deep .carousel-control-prev, ::ng-deep .carousel-control-next {
+    background-color: white;
+  }
+  ::ng-deep .carousel .carousel-control-prev-icon, ::ng-deep .carousel .carousel-control-next-icon {
+    background-color: #000;
+    width: 20px;
+    height: 20px;
+    background-size: 41%;
+    border-radius: 50%;
+  }
+
+  ::ng-deep .carousel .carousel-control-prev{
+      left:-16px;
+      width:20px;
+      height:48px;
+  }
+
+  ::ng-deep .carousel .carousel-control-next{
+    right:-16px;
+    width:20px;
+    height:48px;
+}
+
+
+  a{
+      text-decoration:none !important;
+      cursor: pointer;
+  }

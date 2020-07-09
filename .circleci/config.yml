@@ -1,0 +1,133 @@
+version: 2.1
+jobs:
+    # The build job
+    build:
+        working_directory: ~/project
+        docker:
+            - image: circleci/node:latest-browsers
+        steps:
+            # Checkout the code from the branch into the working_directory
+            - checkout
+            # Log the current branch
+            - run:
+                name: Show current branch
+                command: echo ${CIRCLE_BRANCH}
+            # Restore local dependencies from cache
+            - restore_cache:
+                keys:
+                - v4-dependencies-{{ checksum "package.json" }}
+                - v4-dependencies-
+            # Install project dependencies
+            - run:
+                name: Install local dependencies
+                command: npm install
+            # Cache local dependencies if they don't exist
+            - save_cache:
+                key: v4-dependencies-{{ checksum "package.json" }}
+                paths:
+                    - node_modules
+            # Test the source code
+            # - run:
+            #     name: Testing
+            #     command: npm run test
+            # Build project with different configuration based on
+            # the current branch
+            - run:
+                name: Building
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "staging" ]; then
+                        npm run build:qa
+                    elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+                        npm run build:prod
+                    else
+                        npm run build
+                    fi
+            # Cache the dist folder for the deploy job
+            - save_cache:
+                key: v4-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+                paths:
+                    - dist
+
+    # The deploy job
+    deploy:
+        working_directory: ~/project
+        docker:
+            - image: circleci/node:latest-browsers
+        steps:
+            # Log the current branch
+            - run:
+                name: Show current branch
+                command: echo ${CIRCLE_BRANCH}
+            # Restore cache from the build job which contains the
+            # dist folder that needs to be deployed
+            - restore_cache:
+                key: v4-dist-{{ .Environment.CIRCLE_BRANCH }}-{{ .Environment.CIRCLE_SHA1 }}
+            # Install AWS cli
+            - run:
+                name: Install aws cli
+                command:
+                    sudo apt-get -y -qq install awscli
+            # Set the signature version for the S3 auth
+            - run:
+                name: Setting Signature Version 4 for S3 Request Authentication
+                command: aws configure set default.s3.signature_version s3v4
+            # Deploy to the S3 bucket corresponding to the current branch
+            - run:
+                name: Deploy to S3
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "development" ]; then
+                        aws --region ap-south-1 s3 sync dist/auditTool s3://audit-tool-frontend/ --delete --acl public-read
+                    elif [ "${CIRCLE_BRANCH}" == "staging" ]; then
+                        aws --region ap-south-1 s3 sync dist/auditTool s3://audit-tool-frontend-stage/ --delete --acl public-read
+                    elif [ "${CIRCLE_BRANCH}" == "master" ]; then
+                        aws --region ap-south-1 s3 sync dist/auditTool s3://winningproduct/ --delete --acl public-read
+                    fi
+            # ACTIVATE CLOUD FRONT CLI
+            - run:
+                name: activate cloud front
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                        aws configure set preview.cloudfront true
+                        aws configure set preview.create-invalidation true
+                    fi
+            #Invalidate Cloudfront
+            - run:
+                name: "Invalidate CloudFront Cache"
+                command: |
+                    if [ "${CIRCLE_BRANCH}" == "master" ]; then
+                        aws cloudfront create-invalidation --distribution-id E1COGN6E52FC04 --paths /*
+                    fi
+
+    #sonar clould validation
+    sonar:
+        working_directory: ~/project
+        docker:
+            - image: 'circleci/node:latest'
+        steps:
+            - checkout
+            - sonarcloud/scan
+
+orbs:
+    sonarcloud: sonarsource/sonarcloud@1.0.1
+
+workflows:
+    version: 2.1
+    main:
+        jobs:
+            - sonar:
+                context: SonarClouldFrontend
+    # The build and deploy workflow
+    build_and_deploy:
+        jobs:
+            - build
+            # The deploy job will only run on the filtered branches and
+            # require the build job to be successful before it starts
+            - deploy:
+                requires:
+                    - build
+                filters:
+                    branches:
+                        only:
+                            - development
+                            - staging
+                            - master
