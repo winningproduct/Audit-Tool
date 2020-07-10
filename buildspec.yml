@@ -16,6 +16,7 @@ phases:
       - npm install -g serverless
       - npm install -g @angular/cli
       - echo install dependencies...
+      - npm install
       - cd api
       - npm install
       - cd ../web
