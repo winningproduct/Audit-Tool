@@ -1,0 +1,10 @@
+<ul class="px-3 py-3 d-flex flex-row justify-content-between" class="list-group">
+  <li class="list-group-item">
+    <a (click)="revert(versionDetail.id)">
+      <div>
+        <p class="mb-0 text-14"><strong>{{ versionDetail.createdDate | date: 'dd MMM y - hh:mm a' }}</strong></p>
+        <p class="mb-0 text-14">{{ versionDetail.firstName }} {{ versionDetail.lastName }}</p>
+      </div>
+    </a>
+  </li>
+</ul>

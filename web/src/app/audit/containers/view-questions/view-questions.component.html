@@ -1,0 +1,71 @@
+
+<div class="row" *ngIf="loader">
+  <div class="col-12 col-sm-12 col-md-12 col-lg-12 phaseDiv">
+    <nav aria-label="breadcrumb" class="mt-4 mb-4">
+      <ol class="breadcrumb bg-white px-0">
+        <li class="breadcrumb-item"><a [routerLink]="['/audit/products/']">Product</a></li>
+        <li *ngIf="product != null" class="breadcrumb-item"><a [routerLink]="['/audit/products/', product[0].id, 'phases']">{{ product[0].name }}</a></li>
+        <li
+          class="breadcrumb-item active"
+          aria-current="page"
+          *ngIf="phase != null"
+        >
+          {{ phase[0].name }}
+        </li>
+      </ol>
+    </nav>
+    <div class="row">
+      <div class="col-12 col-sm-12 col-md-4 col-lg-3">
+      <app-knowledge-area-side-bar 
+      *ngIf="items.length"
+      [knowledgeAreas]="items"
+      [productId]="productId"
+      [phaseId]="phaseId"
+      ></app-knowledge-area-side-bar>
+      </div>
+      <div *ngIf="items.length" class="col-12 col-sm-12 col-md-8 col-lg-9">
+        <div *ngIf="knowledgeArea" class="card border-0 bg-light">
+          <div class="card-body">
+            <div class="d-flex flex-row align-items-start">
+              <div class="d-flex flex-row">
+                <div class="mr-4">
+                  <div class="progress-circle progress-{{score}}"><span>{{score}}%</span></div>
+                </div>
+                <div>
+                  <p class="h6">{{knowledgeArea[0].name}}</p>
+                  <p>{{knowledgeArea[0].description}}</p>
+                  <a *ngIf="knowledgeArea" href="{{knowledgeArea[0].url}}" class="alert-link" target="blank">More Info</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="mt-5">
+          <app-evidence-box
+            [phaseId]="phaseId"
+            [knowledgeAreaId]="knowledgeAreaId"
+            [question]="question"
+            [index]="index"
+            *ngFor="let question of questions; let index = index"
+          ></app-evidence-box>
+          <alert type="info w-100" *ngIf="length == 0">
+            <strong>Currently Unavailable</strong> Please contact an administrator for more details
+          </alert>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!loader" class="" style="width:100%; height:calc(100vh - 56px); position: relative; display: flex; align-items: center; justify-content: center;">
+  <ngx-spinner 
+  bdOpacity = 1
+  bdColor = "rgba(255,255,255,1)"
+  size = "medium"
+  color = "#cf46ff"
+  type = "fire"
+  [fullScreen] = "false"
+  >
+  </ngx-spinner>
+</div>

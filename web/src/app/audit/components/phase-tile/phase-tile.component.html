@@ -1,0 +1,17 @@
+  <div class="row align-items-center how-it-works d-flex phaseContent">
+    <div class="col-2 text-center full d-inline-flex justify-content-center align-items-center countContainer">
+      <div class="circle font-weight-bold">
+        <div class="progress-circle progress-{{score}}"><span>{{score}}%</span></div>
+      </div>
+    </div>
+    <div class="col-9 py-5 phaseMiddle">
+      <h5>{{ phase.name}}</h5>
+      <p>{{ phase.description }}</p>
+      <button type="button" class="btn btn-primary btn-sm" (click)="navigate()">Take the audit</button>
+    </div>
+  </div>
+  <div class="row" style="position: relative; left:-3px;">
+    <div class="col-12 col-sm-10 offset-sm-1 px-0">
+      <div class="phaseDevider"></div>
+    </div>
+  </div>

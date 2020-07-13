@@ -1,0 +1,19 @@
+{
+  "name": "wpo-audit-tool",
+  "version": "1.0.0",
+  "description": "WPO Audit Tool",
+  "main": "index.js",
+  "scripts": {
+    "web:run": "npm run start --prefix web",
+    "web:build": "npm run build:prod --prefix web",
+    "api:run": "npm run offline:local --prefix api",
+    "api:deploy": "npm run deploy --prefix api",
+    "dev": "concurrently \"npm run api:run\" \"npm run web:run\"",
+    "deploy": "concurrently \"npm run api:deploy\" \"npm run web:build\""
+  },
+  "author": "WPO Dev Team",
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^5.2.0"
+  }
+}

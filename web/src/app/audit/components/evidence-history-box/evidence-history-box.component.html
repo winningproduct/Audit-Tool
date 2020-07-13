@@ -1,0 +1,40 @@
+<ng-template #template>
+  <div class="modal-body text-center">
+    <p>Do you want to Revert to this Version?</p>
+    <button type="button" class="btn btn-primary button" (click)="save()" >Yes</button>
+    <button type="button" class="btn btn-primary button" (click)="decline()" >No</button>
+  </div>
+</ng-template>
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 d-flex flex-row align-items-center py-3">
+  <div class="mr-3 d-flex flex-row align-items-center">
+    <a (click)="navigate()">
+      <fa-icon [icon]="faArrowLeft" class="text-dark mr-3"></fa-icon>    
+    </a>
+    <h6 *ngIf="evidence != null" class="mb-0">{{ evidence[0].createdDate | date:'medium' }}</h6>
+  </div>
+  <div class="d-flex flex-row align-items-center">
+    <button type="submit" class="btn btn-success d-flex flex-row" (click)="revert(template)">
+      <fa-icon [icon]="faSpinner" *ngIf="submitEvidence" class="text-white fa-spin mr-2 "></fa-icon>
+      Revert
+    </button>
+  </div>
+</div>
+
+<div class="col-12 col-sm-12 col-md-12 col-lg-12 py-3 d-flex">
+  <div class="w-100 px-4 py-4" style="box-shadow: 0 1px 1px 0 rgba(60,64,67,.08), 0 1px 3px 1px rgba(60,64,67,.16);">
+    <div *ngIf="evidence != null">
+      <div [innerHTML]="evidence[0].content"></div>
+      <div class="mb-md-0 mb-2" style="padding-right:5px">
+      </div>
+    </div>
+  </div>
+</div>
+<ngx-spinner 
+  bdOpacity = 1
+  bdColor = "rgba(255,255,255,1)"
+  size = "medium"
+  color = "#cf46ff"
+  type = "fire"
+  [fullScreen] = "false"
+  >
+</ngx-spinner>

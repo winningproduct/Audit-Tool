@@ -1,0 +1,17 @@
+<div class="nav flex-column nav-pills" id="v-pills-tab" role="tablist" aria-orientation="vertical">
+  <a
+    (click) = "loader()"
+    *ngFor="let knowledgeArea of knowledgeAreas"
+    [routerLink]="['/audit/products/', productId, 'phases', phaseId, 'knowledge-areas', knowledgeArea.id, 'question']"
+    [routerLinkActive]="['active']"
+    class="nav-link"
+    id="v-pills-home-tab"
+    data-toggle="pill"
+    href="#v-pills-home"
+    role="tab"
+    aria-controls="v-pills-home"
+    aria-selected="true"
+    >{{ knowledgeArea.name }}</a
+  >
+</div>
+

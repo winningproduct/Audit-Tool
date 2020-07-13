@@ -1,0 +1,53 @@
+@import "../../../../assets/scss/theme";
+
+
+[data-letters]:before {
+  content: attr(data-letters);
+  display: inline-block;
+  font-size: 1em;
+  width: 2.5em;
+  height: 2.5em;
+  line-height: 2.5em;
+  text-align: center;
+  border-radius: 50%;
+  background: $primary;
+  vertical-align: middle;
+  color: $white;
+}
+
+.avatarLetters {
+  margin-bottom: 0px;
+}
+
+.facePile {
+  .facePile-img {
+    img {
+      margin-left: -8px;
+    }
+  }
+
+  .facePile-more {
+    width:32px;
+    height: 32px;
+    border-radius: 50%;
+    margin-left: -8px;
+  }
+}
+
+.product-tile{
+  border-width: 2px;
+  border-color: $gray-200;
+  &:hover{
+    border-color: $primary;
+  }
+}
+
+.product-tile-h {
+  height:100%;
+}
+
+.card-header{
+  ngx-avatar{
+    position: absolute; top: 5px; left:5px; z-index: 2;
+  }
+}

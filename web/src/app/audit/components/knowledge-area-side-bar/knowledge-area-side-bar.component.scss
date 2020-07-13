@@ -1,0 +1,25 @@
+@import "../../../../assets/scss/theme";
+
+.is-active{
+    color:$primary;
+}
+
+.nav-pills{
+    .active{
+        background-color: #f9f5fb !important;
+        color: #8e44ad !important;
+        border-radius: 0px;
+        border-bottom: 2px solid #8e44ad;
+    }
+    .nav-link{
+        margin-bottom: 16px;
+        color: #34495E;
+
+        &:hover{
+            background-color: #f9f5fb !important;
+            border-radius: 0px;
+            color: #8e44ad ;
+        }
+
+    }
+}

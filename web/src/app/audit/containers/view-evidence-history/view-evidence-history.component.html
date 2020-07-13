@@ -1,0 +1,22 @@
+
+  <div class="row evidenceWrapper" *ngIf="loader">
+    <div class="col-12 col-sm-12 col-md-12 col-lg-8">
+      <app-evidence-history-box [productId]="productId" [questionId]="questionId"></app-evidence-history-box>
+    </div>
+    <div class="col-12 col-sm-12 col-md-12 col-lg-3 offset-lg-1 border border-bottom-0 border-light px-0" style="height: 100vh;">
+      <app-versions-tab [productId]="productId" [questionId]="questionId"></app-versions-tab>
+    </div>
+  </div>
+
+
+<div  *ngIf="!loader" class="" style="width:100%; height:calc(100vh - 56px); position: relative; display: flex; align-items: center; justify-content: center;">
+    <ngx-spinner 
+    bdOpacity = 1
+    bdColor = "rgba(255,255,255,1)"
+    size = "medium"
+    color = "#cf46ff"
+    type = "fire"
+    [fullScreen] = "false"
+    >
+    </ngx-spinner>
+  </div>

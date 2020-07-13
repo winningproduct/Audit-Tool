@@ -1,0 +1,17 @@
+<div
+  class="search-results"
+  infiniteScroll
+  [infiniteScrollDistance]="0.2"
+  [infiniteScrollThrottle]="50"
+  [scrollWindow]="false"
+  (scrolled)="onScroll()"
+>
+  <div class="col-12 col-sm-12 px-0">
+    <app-versions-date-group-tile
+      [date]="date"
+      [productId]="productId"
+      [questionId]="questionId"
+      *ngFor="let date of dates"
+    ></app-versions-date-group-tile>
+  </div>
+</div>

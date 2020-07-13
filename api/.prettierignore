@@ -1,0 +1,6 @@
+.gitignore
+.env
+.travis
+/node_modules/**
+/serverless/**
+/.webpack/**

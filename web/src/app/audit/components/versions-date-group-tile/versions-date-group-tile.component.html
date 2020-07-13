@@ -1,0 +1,14 @@
+<a class="px-3 py-2 d-flex flex-row justify-content-between bg-secondary" (click)="isCollapsed = !isCollapsed"
+[attr.aria-expanded]="!isCollapsed" aria-controls="collapseBasic">
+    <div class="d-flex flex-row">
+        <fa-icon [icon]="faSpinner" *ngIf="!dataReceived && isDay" class="text-blask fa-spin mr-2"></fa-icon>
+        <p class="mb-0 lead text-14 font-weight-normal text-white">{{date.name}}</p>
+    </div>
+    <fa-icon [icon]="faCaretDown" class="text-white"></fa-icon>
+</a>
+<div id="collapseBasic" [collapse]="!isCollapsed">
+    <app-versions-date-tile *ngFor="let innerDate of innerDates" (dataEvent)="receiveData($event)" [isDay]="isDay" [innerDate] = "innerDate" [productId]="productId" [questionId]="questionId"></app-versions-date-tile>
+</div>
+
+
+
