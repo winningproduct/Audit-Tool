@@ -1,19 +1,13 @@
 # WPO Audit Tool
 
-### Setup
+Install dependencies
 
- - Install dependencies
+```
+npm run setup
+```
 
-	`
-	cd /api
-	npm install
-	cd ../web
-	npm install
-	`
+Run locally
 
- - Run locally,
-
-	`
-	npm run dev
-	`
-
+```
+npm run dev
+```

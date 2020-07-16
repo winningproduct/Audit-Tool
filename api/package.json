@@ -11,7 +11,7 @@
     "lint": "tslint --project .",
     "lint:fix": "tslint --project . --fix",
     "prettier:fix": "prettier --write \"src/**/*.*\"",
-    "logs":"serverless logs -f product -t"
+    "logs": "serverless logs -f product -t"
   },
   "dependencies": {
     "gem": "^2.4.3",

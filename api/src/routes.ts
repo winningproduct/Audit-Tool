@@ -29,8 +29,6 @@ export class Routes {
     _organizationService: IOrganizationService,
     _adminService: IAdminService,
   ) {
-    this.productService = _productService;
-    this.knowledgeAreaService = _knowledgeAreaService;
     this.evidenceService = _evidenceService;
     this.productService = _productService;
     this.knowledgeAreaService = _knowledgeAreaService;
@@ -39,6 +37,7 @@ export class Routes {
     this.adminService = _adminService;
     this.initiateApi();
   }
+
   initiateApi() {
     this.path.get('product/user/:id', async (req, _res) => {
       const userId = Number(req.pathParameters ? req.pathParameters.id : null);
