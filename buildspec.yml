@@ -16,11 +16,7 @@ phases:
       - npm install -g serverless
       - npm install -g @angular/cli
       - echo install dependencies...
-      - cd api
-      - npm install
-      - cd ../web
-      - npm install
-      - cd ..
+      - npm run setup
   build:
     commands:
       - echo deployment started `date`
