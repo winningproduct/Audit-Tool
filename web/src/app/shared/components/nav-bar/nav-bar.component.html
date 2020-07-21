@@ -10,6 +10,7 @@
                     <ngx-avatar *ngIf="userName == null" size="32" bgColor=#8e44ad name="{{userName}}"></ngx-avatar>
                 </a>
                 <ul *dropdownMenu class="dropdown-menu dropdown-menu-right" role="menu">
+                    <li role="menuitem" *ngIf="isAdmin"><a class="dropdown-item" routerLink="/admin">Admin Panel</a></li>
                     <li role="menuitem"><a class="dropdown-item" (click)="logOut()">Logout</a></li>
                 </ul>
             </div>
