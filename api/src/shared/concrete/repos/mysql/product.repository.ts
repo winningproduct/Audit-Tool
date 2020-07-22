@@ -82,8 +82,10 @@ export class MySQLProductRepository implements IProductRepository {
       connection = await initMysql();
       const phaseRepository = getRepository(PhaseEntity);
       const phases = await phaseRepository.find();
+
       const questionRepository = getRepository(QuestionEntity);
       const questions = await questionRepository.find();
+
       const userRepository = getRepository(UserEntity);
       const user = await userRepository.findOneOrFail(_req.product.userId);
 
@@ -120,6 +122,13 @@ export class MySQLProductRepository implements IProductRepository {
         evidence.version = '1'; // Need to be changed when Question Versoning is Finalized
         await connection.manager.save(evidence);
       }
+
+      // SHOULD WE KEEP THIS ??????
+      // Adding the current user to added product
+      await connection.query(
+        `INSERT INTO product_users__user(productId,userId) VALUES (${result.id},${user})`,
+      );
+      // ??????????????????????????
 
       return true;
     } catch (err) {
