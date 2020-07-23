@@ -7,5 +7,6 @@ export interface IAdminService {
   getAllUsers(): Promise<User[]>;
   addUserProduct(productId: number, userId: number): Promise<boolean>;
   addProduct(product: Product): Promise<boolean>;
+  addOrganization(organization: Organization): Promise<boolean>;
   getAllOrganizations(): Promise<Organization[]>;
 }

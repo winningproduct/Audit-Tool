@@ -123,12 +123,10 @@ export class MySQLProductRepository implements IProductRepository {
         await connection.manager.save(evidence);
       }
 
-      // SHOULD WE KEEP THIS ??????
       // Adding the current user to added product
       await connection.query(
         `INSERT INTO product_users__user(productId,userId) VALUES (${result.id},${user})`,
       );
-      // ??????????????????????????
 
       return true;
     } catch (err) {

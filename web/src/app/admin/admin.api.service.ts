@@ -42,9 +42,14 @@ export class AdminApiService {
 
   public async addProduct(product: Product): Promise<boolean> {
     const result = await this.httpClient
-      .post(adminRoute + '/product', {
-        product,
-      })
+      .post(adminRoute + '/product', { product })
+      .toPromise();
+    return JSON.parse(result['body']);
+  }
+
+  public async addOrganization(organization: Organization): Promise<boolean> {
+    const result = await this.httpClient
+      .post(adminRoute + '/organization', { organization })
       .toPromise();
     return JSON.parse(result['body']);
   }

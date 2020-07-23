@@ -18,9 +18,7 @@ import { AlertComponent } from './components/alert/alert.component';
     AvatarModule,
     BsDropdownModule.forRoot(),
     ToastrModule.forRoot({
-      timeOut: 3000,
-      progressBar: true,
-      progressAnimation: "increasing",
+      timeOut: 3000
     }), // ToastrModule added
   ],
   exports: [NavBarComponent, AlertComponent],

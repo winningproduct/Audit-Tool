@@ -20,11 +20,17 @@ export class AdminComponent implements OnInit {
   selectedUser: User = null;
   selectedProduct: Product = null;
   selectedOrganization: Organization = null;
+  currentUser = null;
   selectedStatus1 = null;
   selectedStatus2 = null;
   selectedStatus3 = null;
+  selectedStatus4 = null;
   productName = '';
   productDes = '';
+  addMe = true;
+  organizationName = '';
+  organizationEmail = '';
+  organizationPhone = '';
   faSpinner = faSpinner;
   loader = false;
 
@@ -37,9 +43,14 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     this.showSpinner();
+    await this.getCurrentUser();
     await this.getAllProducts();
     await this.getAllUsers();
     await this.getAllOrganizations();
+    this.setSelectedUser(
+      this.users.filter((user) => user.id === Number(this.currentUser))[0],
+    );
+    this.selectedStatus4 = Number(this.currentUser);
     const uId = await this.authService.isAdmin();
     this.hideSpinner();
   }
@@ -54,6 +65,10 @@ export class AdminComponent implements OnInit {
 
   async getAllOrganizations() {
     this.organizations = await this.adminService.getAllOrganizations();
+  }
+
+  async getCurrentUser() {
+    this.currentUser = await this.authService.getCurrentUserId();
   }
 
   async addUserToProject() {
@@ -79,14 +94,29 @@ export class AdminComponent implements OnInit {
     product.name = this.productName;
     product.description = this.productDes;
     product.organizationId = this.selectedOrganization.id;
-    const uId = await this.authService.getCurrentUserId();
-    product.userId = Number(uId);
+    product.userId = this.selectedUser.id;
+
     const result = await this.adminService.addProduct(product);
 
     if (result) {
       this.alert.showSuccess('Product added successfuly', 'Done');
     } else {
       this.alert.showError('Cannot add the product', 'Error');
+    }
+  }
+
+  async addOrganization() {
+    const organization = new Organization();
+    organization.name = this.organizationName;
+    organization.email = this.organizationEmail;
+    organization.phoneNumber = this.organizationPhone;
+
+    const result = await this.adminService.addOrganization(organization);
+
+    if (result) {
+      this.alert.showSuccess('Organization added successfuly', 'Done');
+    } else {
+      this.alert.showError('Cannot add the organization', 'Error');
     }
   }
 
@@ -101,6 +131,7 @@ export class AdminComponent implements OnInit {
   setSelectedOrganization(org: any) {
     this.selectedOrganization = org;
   }
+
   async showSpinner() {
     this.spinner.show();
   }

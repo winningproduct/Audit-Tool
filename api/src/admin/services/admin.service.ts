@@ -5,6 +5,7 @@ import { injectable, inject } from 'inversify';
 import { IUserRepository } from '@repos/user.repository.interface';
 import { Product } from '@models/product';
 import { IOrganizationRepository } from '@repos/organization.repository.interface';
+import { Organization } from '@models/organization';
 
 @injectable()
 export class AdminService implements IAdminService {
@@ -41,5 +42,9 @@ export class AdminService implements IAdminService {
 
   async addProduct(product: Product) {
     return await this.productRepository.add(product);
+  }
+
+  async addOrganization(organization: Organization) {
+    return await this.organizationRepository.add(organization);
   }
 }

@@ -218,6 +218,10 @@ export class Routes {
       return await this.adminService.addProduct(req.body);
     });
 
+    this.path.post('admin/organization', async (req, _res) => {
+      return await this.adminService.addOrganization(req.body);
+    });
+
     // For Progress Bar
     this.path.get('questionCount/knowledgeArea/:id', async (req, _res) => {
       const knowledgeAreaId = req.pathParameters ? req.pathParameters.id : 0;

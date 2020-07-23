@@ -12,6 +12,8 @@
                     <ng-select class="custom-select" [items]="users" bindLabel="email" bindValue="id" [(ngModel)]="selectedStatus1"
                       (change)="setSelectedUser($event)" placeholder="Select User">
                     </ng-select>
+                  </div>
+                  <div class="form-group" style="min-width:320px;">
                     Select Product
                     <ng-select class="custom-select" [items]="products" bindLabel="name" bindValue="id" [(ngModel)]="selectedStatus2"
                       (change)="setProductId($event)" placeholder="Select Products">
@@ -34,14 +36,48 @@
                 <div class="card-body pt-0">
                   <div class="form-group" style="min-width:320px;">
                     Product Name <input class="form-control" [(ngModel)]="productName" type="text" style="width: 100%;">
+                  </div>
+                  <div class="form-group" style="min-width:320px;">
                     Product Description <textarea class="form-control" [(ngModel)]="productDes" type="text"
                       style="width: 100%;"></textarea>
+                  </div>
+                  <div class="form-group" style="min-width:320px;">
                     Select Organization
                     <ng-select class="custom-select" [items]="organizations" bindLabel="name" bindValue="id"
                       [(ngModel)]="selectedStatus3" (change)="setSelectedOrganization($event)" placeholder="Select Organization">
                     </ng-select>
                   </div>
+                  <div class="form-group" style="min-width:320px;">
+                    Select User
+                    <ng-select class="custom-select" [items]="users" bindLabel="email" bindValue="id" [(ngModel)]="selectedStatus4"
+                      (change)="setSelectedUser($event)" placeholder="Select User">
+                    </ng-select>
+                  </div>
                   <button type="submit" class="btn btn-primary d-flex" (click)="addProduct()">
+                    Save
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </tab>
+      <tab heading="Add New Organization">
+        <div class="row d-flex mt-4">
+          <div class="col-12 col-sm-12">
+            <div class="card-deck">
+              <div class="card admin-tile p-3">
+                <div class="card-body pt-0">
+                  <div class="form-group" style="min-width:320px;">
+                    Organization Name <input class="form-control" [(ngModel)]="organizationName" type="text" style="width: 100%;">
+                  </div>
+                  <div class="form-group" style="min-width:320px;">
+                    Organization Email <input class="form-control" [(ngModel)]="organizationEmail" type="text" style="width: 100%;">
+                  </div>
+                  <div class="form-group" style="min-width:320px;">
+                    Organization Phone <input class="form-control" [(ngModel)]="organizationPhone" type="text" style="width: 100%;">
+                  </div>
+                  <button type="submit" class="btn btn-primary d-flex" (click)="addOrganization()">
                     Save
                   </button>
                 </div>
