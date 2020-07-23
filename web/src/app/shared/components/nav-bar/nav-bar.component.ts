@@ -22,7 +22,7 @@ export class NavBarComponent implements OnInit {
     this.currentUser = await this.authService.getCurrentUser();
     if ( this.currentUser ) {
       this.userName = this.currentUser.given_name + ' ' + this.currentUser.family_name;
-      this.isAdmin = this.currentUser.admin === '1' ? true : false;
+      this.isAdmin = this.currentUser.admin;
     } else {
       this.userName = 'User';
       this.isAdmin = false;

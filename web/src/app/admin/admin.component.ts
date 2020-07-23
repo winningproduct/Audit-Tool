@@ -4,13 +4,14 @@ import { User } from '@shared/models/user';
 import { Product } from '@shared/models/product';
 import { Organization } from '@shared/models/organization';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
-  styleUrls: ['./admin.component.scss']
+  styleUrls: ['./admin.component.scss'],
 })
 export class AdminComponent implements OnInit {
   users = [];
@@ -31,8 +32,8 @@ export class AdminComponent implements OnInit {
     private adminService: AdminApiService,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
-
-    ) { }
+    private alert: AlertComponent,
+  ) {}
 
   async ngOnInit() {
     this.showSpinner();
@@ -41,7 +42,6 @@ export class AdminComponent implements OnInit {
     await this.getAllOrganizations();
     const uId = await this.authService.isAdmin();
     this.hideSpinner();
-
   }
 
   async getAllUsers() {
@@ -58,10 +58,19 @@ export class AdminComponent implements OnInit {
 
   async addUserToProject() {
     if (this.selectedProduct != null && this.selectedUser != null) {
-      const result = await this.adminService.addProductUser(this.selectedProduct.id, this.selectedUser.id);
+      const result = await this.adminService.addProductUser(
+        this.selectedProduct.id,
+        this.selectedUser.id,
+      );
+
       console.log(result);
+      if (result === true) {
+        this.alert.showSuccess('User added successfuly', 'Done');
+      } else {
+        this.alert.showError('Cannot add the user', 'Error');
+      }
     } else {
-      console.log('Please select a User and Product');
+      this.alert.showError('Please select a User and Product', 'Warning');
     }
   }
 
@@ -73,6 +82,12 @@ export class AdminComponent implements OnInit {
     const uId = await this.authService.getCurrentUserId();
     product.userId = Number(uId);
     const result = await this.adminService.addProduct(product);
+
+    if (result) {
+      this.alert.showSuccess('Product added successfuly', 'Done');
+    } else {
+      this.alert.showError('Cannot add the product', 'Error');
+    }
   }
 
   setProductId(product: any) {

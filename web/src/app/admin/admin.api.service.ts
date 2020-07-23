@@ -12,7 +12,9 @@ export class AdminApiService {
   constructor(private httpClient: HttpClient) {}
 
   public async getAllProducts(): Promise<Product[]> {
-    const result = await this.httpClient.get(adminRoute + '/products').toPromise();
+    const result = await this.httpClient
+      .get(adminRoute + '/products')
+      .toPromise();
     return JSON.parse(result['body']) as Product[];
   }
 
@@ -22,23 +24,28 @@ export class AdminApiService {
   }
 
   async getAllOrganizations(): Promise<Organization[]> {
-    const result = await this.httpClient.get(adminRoute + '/organizations').toPromise();
+    const result = await this.httpClient
+      .get(adminRoute + '/organizations')
+      .toPromise();
     return JSON.parse(result['body']) as Organization[];
   }
 
   public async addProductUser(pId: number, uId: number): Promise<boolean> {
-    const result = await this.httpClient.post(adminRoute + '/userProducts' , {
-      productId : pId,
-      userId : uId
-    }).toPromise();
+    const result = await this.httpClient
+      .post(adminRoute + '/userProducts', {
+        productId: pId,
+        userId: uId,
+      })
+      .toPromise();
     return JSON.parse(result['body']);
-}
+  }
 
-public async addProduct(product: Product): Promise<boolean> {
-    const result = await this.httpClient.post(adminRoute + '/product', {
-      product
-    }).toPromise();
+  public async addProduct(product: Product): Promise<boolean> {
+    const result = await this.httpClient
+      .post(adminRoute + '/product', {
+        product,
+      })
+      .toPromise();
     return JSON.parse(result['body']);
-}
-
+  }
 }

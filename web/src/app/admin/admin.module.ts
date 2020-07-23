@@ -10,6 +10,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '@shared/shared.module';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthService } from '@shared/services/auth/auth.service';
+import { AlertComponent } from '@shared/components/alert/alert.component';
 
 
 
@@ -30,7 +31,7 @@ import { AuthService } from '@shared/services/auth/auth.service';
     SharedModule,
     NgxSpinnerModule,
   ],
-  providers: [AuthService],
-  schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
+  providers: [AuthService, AlertComponent],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
-export class AdminModule { }
+export class AdminModule {}
