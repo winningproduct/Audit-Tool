@@ -218,7 +218,7 @@ export class Routes {
       return await this.adminService.addProduct(req.body);
     });
 
-    this.path.post('admin/organization', async (req, _res) => {
+    this.path.post('admin/organizations', async (req, _res) => {
       return await this.adminService.addOrganization(req.body);
     });
 

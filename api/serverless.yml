@@ -212,5 +212,12 @@ functions:
           authorizer:
             name: authorizer
             arn: ${env:ARN}
+      - http:
+          method: post
+          path: admin/organizations
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${env:ARN}
   auth-token-trigger:
     handler: src/functions/auth-token-trigger.authToken

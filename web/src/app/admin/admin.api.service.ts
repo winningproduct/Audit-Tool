@@ -49,7 +49,7 @@ export class AdminApiService {
 
   public async addOrganization(organization: Organization): Promise<boolean> {
     const result = await this.httpClient
-      .post(adminRoute + '/organization', { organization })
+      .post(adminRoute + '/organizations', { organization })
       .toPromise();
     return JSON.parse(result['body']);
   }
