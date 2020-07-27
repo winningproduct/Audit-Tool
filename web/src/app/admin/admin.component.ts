@@ -72,14 +72,14 @@ export class AdminComponent implements OnInit {
   }
 
   async addUserToProject() {
-    if (this.selectedProduct != null && this.selectedUser != null) {
+    if (this.selectedProduct && this.selectedUser) {
       const result = await this.adminService.addProductUser(
         this.selectedProduct.id,
         this.selectedUser.id,
       );
 
-      console.log(result);
       if (result === true) {
+        this.reset();
         this.alert.showSuccess('User added successfuly', 'Done');
       } else {
         this.alert.showError('Cannot add the user', 'Error');
@@ -90,34 +90,62 @@ export class AdminComponent implements OnInit {
   }
 
   async addProduct() {
-    const product = new Product();
-    product.name = this.productName;
-    product.description = this.productDes;
-    product.organizationId = this.selectedOrganization.id;
-    product.userId = this.selectedUser.id;
 
-    const result = await this.adminService.addProduct(product);
+    if (this.productName && this.selectedOrganization && this.selectedUser) {
+      const product = new Product();
+      product.name = this.productName;
+      product.description = this.productDes;
+      product.organizationId = this.selectedOrganization.id;
+      product.userId = this.selectedUser.id;
 
-    if (result) {
-      this.alert.showSuccess('Product added successfuly', 'Done');
+      const result = await this.adminService.addProduct(product);
+
+      if (result) {
+        this.reset();
+        this.alert.showSuccess('Product added successfuly', 'Done');
+      } else {
+        this.alert.showError('Cannot add the product', 'Error');
+      }
     } else {
-      this.alert.showError('Cannot add the product', 'Error');
+      this.alert.showError('Product name and organization is required', 'Error');
     }
   }
 
   async addOrganization() {
-    const organization = new Organization();
-    organization.name = this.organizationName;
-    organization.email = this.organizationEmail;
-    organization.phoneNumber = this.organizationPhone;
 
-    const result = await this.adminService.addOrganization(organization);
+    if (this.organizationName) {
+      const organization = new Organization();
+      organization.name = this.organizationName;
+      organization.email = this.organizationEmail;
+      organization.phoneNumber = this.organizationPhone;
 
-    if (result) {
-      this.alert.showSuccess('Organization added successfuly', 'Done');
+      const result = await this.adminService.addOrganization(organization);
+
+      if (result) {
+        this.reset();
+        this.alert.showSuccess('Organization added successfuly', 'Done');
+      } else {
+        this.alert.showError('Cannot add the organization', 'Error');
+      }
     } else {
-      this.alert.showError('Cannot add the organization', 'Error');
+      this.alert.showError('Organization name is required', 'Error');
     }
+  }
+
+  reset() {
+    this.productName = "";
+    this.productDes = "";
+    this.selectedOrganization = null;
+    this.selectedUser = null;
+    this.selectedProduct = null ;
+    this.organizationName = '';
+    this.organizationEmail = "";
+    this.organizationPhone = "";
+    this.selectedStatus1 = null;
+    this.selectedStatus2 = null;
+    this.selectedStatus3 = null;
+    this.selectedStatus4 = null;
+    this.ngOnInit();
   }
 
   setProductId(product: any) {
