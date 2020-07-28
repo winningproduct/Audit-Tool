@@ -7,6 +7,7 @@ import { AuthService } from '@shared/services/auth/auth.service';
 import { AlertComponent } from '@shared/components/alert/alert.component';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin',
@@ -17,28 +18,34 @@ export class AdminComponent implements OnInit {
   users = [];
   products = [];
   organizations = [];
-  selectedUser: User = null;
-  selectedProduct: Product = null;
-  selectedOrganization: Organization = null;
   currentUser = null;
-  selectedStatus1 = null;
-  selectedStatus2 = null;
-  selectedStatus3 = null;
-  selectedStatus4 = null;
-  productName = '';
-  productDes = '';
-  addMe = true;
-  organizationName = '';
-  organizationEmail = '';
-  organizationPhone = '';
   faSpinner = faSpinner;
   loader = false;
+
+  productUserForm = this.fb.group({
+    product: ['', Validators.required],
+    userIds: ['', Validators.required],
+  });
+
+  productForm = this.fb.group({
+    name: ['', Validators.required],
+    description: [''],
+    organization: ['', Validators.required],
+    userIds: ['', Validators.required],
+  });
+
+  organizationForm = this.fb.group({
+    name: ['', Validators.required],
+    email: [''],
+    phone: [''],
+  });
 
   constructor(
     private adminService: AdminApiService,
     private authService: AuthService,
     private spinner: NgxSpinnerService,
     private alert: AlertComponent,
+    private fb: FormBuilder,
   ) {}
 
   async ngOnInit() {
@@ -47,11 +54,6 @@ export class AdminComponent implements OnInit {
     await this.getAllProducts();
     await this.getAllUsers();
     await this.getAllOrganizations();
-    this.setSelectedUser(
-      this.users.filter((user) => user.id === Number(this.currentUser))[0],
-    );
-    this.selectedStatus4 = Number(this.currentUser);
-    const uId = await this.authService.isAdmin();
     this.hideSpinner();
   }
 
@@ -72,52 +74,64 @@ export class AdminComponent implements OnInit {
   }
 
   async addUserToProject() {
-    if (this.selectedProduct && this.selectedUser) {
-      const result = await this.adminService.addProductUser(
-        this.selectedProduct.id,
-        this.selectedUser.id,
-      );
+    const { product, userIds } = this.productUserForm.value;
 
-      if (result === true) {
+    if (product && userIds) {
+      const result = await this.adminService.addProductUser(product, userIds);
+
+      if (result) {
         this.reset();
         this.alert.showSuccess('User added successfuly', 'Done');
       } else {
         this.alert.showError('Cannot add the user', 'Error');
       }
     } else {
-      this.alert.showError('Please select a User and Product', 'Warning');
+      this.alert.showError(
+        'Please select at least one user and a Product',
+        'Warning',
+      );
     }
   }
 
   async addProduct() {
+    const { name, description, organization, userIds } = this.productForm.value;
 
-    if (this.productName && this.selectedOrganization && this.selectedUser) {
-      const product = new Product();
-      product.name = this.productName;
-      product.description = this.productDes;
-      product.organizationId = this.selectedOrganization.id;
-      product.userId = this.selectedUser.id;
+    if (name && organization) {
+      if (userIds) {
+        const product = new Product();
+        product.name = name;
+        product.description = description;
+        product.organizationId = organization;
+        product.users = userIds;
+        product.userId = this.currentUser;
 
-      const result = await this.adminService.addProduct(product);
+        const result = await this.adminService.addProduct(product);
 
-      if (result) {
-        this.reset();
-        this.alert.showSuccess('Product added successfuly', 'Done');
+        if (result) {
+          this.reset();
+          this.alert.showSuccess('Product added successfuly', 'Done');
+        } else {
+          this.alert.showError('Cannot add the product', 'Error');
+        }
       } else {
-        this.alert.showError('Cannot add the product', 'Error');
+        this.alert.showError('At least one user is required', 'Error');
       }
     } else {
-      this.alert.showError('Product name and organization is required', 'Error');
+      this.alert.showError(
+        'Product name and organization is required',
+        'Error',
+      );
     }
   }
 
   async addOrganization() {
+    const { name, email, phone } = this.organizationForm.value;
 
-    if (this.organizationName) {
+    if (name) {
       const organization = new Organization();
-      organization.name = this.organizationName;
-      organization.email = this.organizationEmail;
-      organization.phoneNumber = this.organizationPhone;
+      organization.name = name;
+      organization.email = email;
+      organization.phoneNumber = phone;
 
       const result = await this.adminService.addOrganization(organization);
 
@@ -132,33 +146,7 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  reset() {
-    this.productName = "";
-    this.productDes = "";
-    this.selectedOrganization = null;
-    this.selectedUser = null;
-    this.selectedProduct = null ;
-    this.organizationName = '';
-    this.organizationEmail = "";
-    this.organizationPhone = "";
-    this.selectedStatus1 = null;
-    this.selectedStatus2 = null;
-    this.selectedStatus3 = null;
-    this.selectedStatus4 = null;
-    this.ngOnInit();
-  }
-
-  setProductId(product: any) {
-    this.selectedProduct = product;
-  }
-
-  setSelectedUser(user: any) {
-    this.selectedUser = user;
-  }
-
-  setSelectedOrganization(org: any) {
-    this.selectedOrganization = org;
-  }
+  reset() {}
 
   async showSpinner() {
     this.spinner.show();

@@ -7,21 +7,23 @@
             <div class="card-deck">
               <div class="card admin-tile p-3">
                 <div class="card-body pt-0">
-                  <div class="form-group" style="min-width:320px;">
-                    Select User
-                    <ng-select class="custom-select" [items]="users" bindLabel="email" bindValue="id" [(ngModel)]="selectedStatus1"
-                      (change)="setSelectedUser($event)" placeholder="Select User">
-                    </ng-select>
-                  </div>
-                  <div class="form-group" style="min-width:320px;">
-                    Select Product
-                    <ng-select class="custom-select" [items]="products" bindLabel="name" bindValue="id" [(ngModel)]="selectedStatus2"
-                      (change)="setProductId($event)" placeholder="Select Products">
-                    </ng-select>
-                  </div>
-                  <button type="submit" class="btn btn-primary d-flex" (click)="addUserToProject()">
-                    Save
-                  </button>
+                  <form [formGroup]="productUserForm" (ngSubmit)="addUserToProject()">
+                    <div class="form-group" style="min-width:320px;">
+                      Select Product
+                      <ng-select class="custom-select" [items]="products" bindLabel="name" bindValue="id"
+                        formControlName="product" placeholder="Select Product">
+                      </ng-select>
+                    </div>
+                    <div class="form-group" style="min-width:320px;">
+                      Select Users
+                      <ng-select class="custom-select" [multiple]="true" [closeOnSelect]="false" [items]="users"
+                        bindLabel="email" bindValue="id" formControlName="userIds" placeholder="Select User">
+                      </ng-select>
+                    </div>
+                    <button type="submit" class="btn btn-primary d-flex">
+                      Save
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -34,28 +36,32 @@
             <div class="card-deck">
               <div class="card admin-tile p-3">
                 <div class="card-body pt-0">
-                  <div class="form-group" style="min-width:320px;">
-                    Product Name <input class="form-control" [(ngModel)]="productName" type="text" style="width: 100%;">
-                  </div>
-                  <div class="form-group" style="min-width:320px;">
-                    Product Description <textarea class="form-control" [(ngModel)]="productDes" type="text"
-                      style="width: 100%;"></textarea>
-                  </div>
-                  <div class="form-group" style="min-width:320px;">
-                    Select Organization
-                    <ng-select class="custom-select" [items]="organizations" bindLabel="name" bindValue="id"
-                      [(ngModel)]="selectedStatus3" (change)="setSelectedOrganization($event)" placeholder="Select Organization">
-                    </ng-select>
-                  </div>
-                  <div class="form-group" style="min-width:320px;">
-                    Select User
-                    <ng-select class="custom-select" [items]="users" bindLabel="email" bindValue="id" [(ngModel)]="selectedStatus4"
-                      (change)="setSelectedUser($event)" placeholder="Select User">
-                    </ng-select>
-                  </div>
-                  <button type="submit" class="btn btn-primary d-flex" (click)="addProduct()">
-                    Save
-                  </button>
+                  <form [formGroup]="productForm" (ngSubmit)="addProduct()">
+                    <div class="form-group" style="min-width:320px;">
+                      Product Name
+                      <input class="form-control" formControlName="name" type="text" style="width: 100%;">
+                    </div>
+                    <div class="form-group" style="min-width:320px;">
+                      Product Description
+                      <textarea class="form-control" formControlName="description" type="text"
+                        style="width: 100%;"></textarea>
+                    </div>
+                    <div class="form-group" style="min-width:320px;">
+                      Select Organization
+                      <ng-select class="custom-select" [items]="organizations" bindLabel="name" bindValue="id"
+                        formControlName="organization" placeholder="Select Organization">
+                      </ng-select>
+                    </div>
+                    <div class="form-group" style="min-width:320px;">
+                      Select Users
+                      <ng-select class="custom-select" [multiple]="true" [closeOnSelect]="false" [items]="users"
+                        bindLabel="email" bindValue="id" formControlName="userIds" placeholder="Select User">
+                      </ng-select>
+                    </div>
+                    <button type="submit" class="btn btn-primary d-flex">
+                      Save
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -68,18 +74,23 @@
             <div class="card-deck">
               <div class="card admin-tile p-3">
                 <div class="card-body pt-0">
-                  <div class="form-group" style="min-width:320px;">
-                    Organization Name <input class="form-control" [(ngModel)]="organizationName" type="text" style="width: 100%;">
-                  </div>
-                  <div class="form-group" style="min-width:320px;">
-                    Organization Email <input class="form-control" [(ngModel)]="organizationEmail" type="text" style="width: 100%;">
-                  </div>
-                  <div class="form-group" style="min-width:320px;">
-                    Organization Phone <input class="form-control" [(ngModel)]="organizationPhone" type="text" style="width: 100%;">
-                  </div>
-                  <button type="submit" class="btn btn-primary d-flex" (click)="addOrganization()">
-                    Save
-                  </button>
+                  <form [formGroup]="organizationForm" (ngSubmit)="addOrganization()">
+                    <div class="form-group" style="min-width:320px;">
+                      Organization Name
+                      <input class="form-control" formControlName="name" type="text" style="width: 100%;">
+                    </div>
+                    <div class="form-group" style="min-width:320px;">
+                      Organization Email
+                      <input class="form-control" formControlName="email" type="email" style="width: 100%;">
+                    </div>
+                    <div class="form-group" style="min-width:320px;">
+                      Organization Phone
+                      <input class="form-control" formControlName="phone" type="text" style="width: 100%;">
+                    </div>
+                    <button type="submit" class="btn btn-primary d-flex">
+                      Save
+                    </button>
+                  </form>
                 </div>
               </div>
             </div>
@@ -90,14 +101,8 @@
   </div>
 </div>
 
-<div  *ngIf="!loader" class="" style="width:100%; height:calc(100vh - 56px); position: relative; display: flex; align-items: center; justify-content: center;">
-  <ngx-spinner 
-  bdOpacity = 1
-  bdColor = "rgba(255,255,255,1)"
-  size = "medium"
-  color = "#cf46ff"
-  type = "fire"
-  [fullScreen] = "false"
-  >
+<div *ngIf="!loader" class=""
+  style="width:100%; height:calc(100vh - 56px); position: relative; display: flex; align-items: center; justify-content: center;">
+  <ngx-spinner bdOpacity=1 bdColor="rgba(255,255,255,1)" size="medium" color="#cf46ff" type="fire" [fullScreen]="false">
   </ngx-spinner>
 </div>

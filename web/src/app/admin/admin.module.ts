@@ -12,8 +12,6 @@ import { NgxSpinnerModule } from 'ngx-spinner';
 import { AuthService } from '@shared/services/auth/auth.service';
 import { AlertComponent } from '@shared/components/alert/alert.component';
 
-
-
 @NgModule({
   declarations: [AdminComponent],
   imports: [
