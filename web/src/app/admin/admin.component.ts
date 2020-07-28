@@ -146,7 +146,35 @@ export class AdminComponent implements OnInit {
     }
   }
 
-  reset() {}
+  async reset() {
+    this.showSpinner();
+    this.users = [];
+    this.products = [];
+    this.organizations = [];
+
+    this.productUserForm = this.fb.group({
+      product: ['', Validators.required],
+      userIds: ['', Validators.required],
+    });
+
+    this.productForm = this.fb.group({
+      name: ['', Validators.required],
+      description: [''],
+      organization: ['', Validators.required],
+      userIds: ['', Validators.required],
+    });
+
+    this.organizationForm = this.fb.group({
+      name: ['', Validators.required],
+      email: [''],
+      phone: [''],
+    });
+
+    await this.getAllProducts();
+    await this.getAllUsers();
+    await this.getAllOrganizations();
+    this.hideSpinner();
+  }
 
   async showSpinner() {
     this.spinner.show();
