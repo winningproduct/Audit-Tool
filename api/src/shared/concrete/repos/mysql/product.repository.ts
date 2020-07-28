@@ -123,11 +123,19 @@ export class MySQLProductRepository implements IProductRepository {
         await connection.manager.save(evidence);
       }
 
-      // Adding the current user to added product
-      await connection.query(
-        `INSERT INTO product_users__user(productId,userId) VALUES (${result.id},${user})`,
-      );
+      // Adding users to product
+      if (_req.product.users.length > 0) {
+        let query = `INSERT INTO product_users__user(productId,userId) VALUES `;
+        for (var i = 1; i <= _req.product.users.length; i++) {
+          query = query + `(${result.id},${_req.product.users[i - 1]})`;
+          if (i !== _req.product.users.length) {
+            query = query + ',';
+          }
+        }
 
+        await connection.query(query);
+      }
+        
       return true;
     } catch (err) {
       throw err;

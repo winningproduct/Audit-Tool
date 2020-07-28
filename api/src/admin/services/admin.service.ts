@@ -36,8 +36,8 @@ export class AdminService implements IAdminService {
     return await this.organizationRepository.getAllOrganizations();
   }
 
-  async addUserProduct(productId: number, userId: number) {
-    return await this.userRepository.assignProjectToUser(productId, userId);
+  async addUserProduct(productId: number, userIds: []) {
+    return await this.userRepository.assignProjectToUser(productId, userIds);
   }
 
   async addProduct(product: Product) {

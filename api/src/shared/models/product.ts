@@ -5,5 +5,6 @@ export class Product extends BaseEntity {
   createdDate!: string;
   description!: string;
   userId!: number;
+  users!: [];
   organizationId!: number;
 }

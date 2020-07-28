@@ -6,7 +6,7 @@ export interface IUserRepository extends IRepository<User> {
 
   getUsersByProjectId(id: number): Promise<User[]>;
 
-  assignProjectToUser(productId: number, userId: number): Promise<boolean>;
+  assignProjectToUser(productId: number, userIds: []): Promise<boolean>;
 
   getAllUsers(): Promise<User[]>;
 }

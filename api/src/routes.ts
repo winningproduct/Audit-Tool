@@ -210,7 +210,7 @@ export class Routes {
     this.path.post('admin/userProducts', async (req, _res) => {
       return await this.adminService.addUserProduct(
         req.body.productId,
-        req.body.userId,
+        req.body.userIds,
       );
     });
 
