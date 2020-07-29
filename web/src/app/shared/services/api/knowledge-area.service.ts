@@ -16,21 +16,21 @@ export class KnowledgeAreaApiService {
 
   public async get(id: number): Promise<KnowledgeArea[]> {
     const result = await this.httpClient
-      .get(productPhaseRoute + '/' + id + '/knowledgeAreas')
+      .get(`${productPhaseRoute}/${id}/knowledgeAreas`)
       .toPromise();
     return JSON.parse(result['body']) as KnowledgeArea[];
   }
 
   public async getQuestionCount(id: number): Promise<any> {
     const result = await this.httpClient
-      .get(questionRoute + 'Count/knowledgeArea/' + id)
+      .get(`${questionRoute}Count/knowledgeArea/${id}`)
       .toPromise();
     return JSON.parse(result['body']);
   }
 
   public async getById(id: number): Promise<KnowledgeArea[]> {
     const result = await this.httpClient
-      .get(knowledgeAreaRoute + '/' + id)
+      .get(`${knowledgeAreaRoute}/${id}`)
       .toPromise();
     return JSON.parse(result['body']) as KnowledgeArea[];
   }

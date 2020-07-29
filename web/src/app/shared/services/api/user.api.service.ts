@@ -11,16 +11,15 @@ export class UserApiService {
 
   public async get(email: string): Promise<User[]> {
     const result = await this.httpClient
-      .get(userRoute + '/email/' + email)
+      .get(`${userRoute}/email/${email}`)
       .toPromise();
     return result as User[];
   }
 
   public async getusersByProduct(id: number) {
     const result = await this.httpClient
-      .get(userRoute + '/product/' + id)
+      .get(`${userRoute}/product/${id}`)
       .toPromise();
     return result['body'];
   }
-
 }
