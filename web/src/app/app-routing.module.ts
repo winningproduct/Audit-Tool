@@ -1,11 +1,8 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {
-  AuthGuardService as AuthGuard
-} from './shared/services/auth/auth-guard.service';
-import {
-  RoleGuardService as RoleGuard
-} from './shared/services/auth/role-guard.service';
+import { AuthGuardService as AuthGuard } from './shared/services/auth/auth-guard.service';
+import { RoleGuardService as RoleGuard } from './shared/services/auth/role-guard.service';
+
 const routes: Routes = [
   {
     path: 'audit',
@@ -14,9 +11,8 @@ const routes: Routes = [
   },
   {
     path: 'shared',
-    loadChildren: () =>
-      import('./shared/shared.module').then(m => m.SharedModule),
-      canActivate : [AuthGuard]
+    loadChildren: () => import('./shared/shared.module').then(m => m.SharedModule),
+    canActivate : [AuthGuard]
   },
   {
     path: 'auth',
@@ -38,4 +34,5 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
+
 export class AppRoutingModule {}

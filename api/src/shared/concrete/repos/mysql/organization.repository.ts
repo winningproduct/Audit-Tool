@@ -48,10 +48,31 @@ export class MySQLOrganizationRepository implements IOrganizationRepository {
     }
   }
 
-  get(_itemId: number): Organization {
-    throw new Error('Method not implemented.');
+  // WIP add organization
+  async add(_req: any): Promise<boolean> {
+    let connection: any;
+    try {
+      connection = await initMysql();
+
+      const organization = new Organization();
+      organization.name = _req.organization.name;
+      organization.email = _req.organization.email;
+      organization.phoneNumber = _req.organization.phoneNumber;
+
+      const result = await connection.manager.save(organization);
+      return true;
+
+    } catch (err) {
+      throw err;
+
+    } finally {
+      if (connection != null) {
+        await connection.close();
+      }
+    }
   }
-  add(_item: Organization) {
+
+  get(_itemId: number): Organization {
     throw new Error('Method not implemented.');
   }
   update(_itemId: number, _item: Organization) {

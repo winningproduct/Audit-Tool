@@ -11,14 +11,14 @@ export class QuestionApiService {
 
   public async get(knowledgeAreaId: number): Promise<Question[]> {
     const result = await this.httpClient
-      .get(knowledgeAreaRoute + '/' + knowledgeAreaId + '/questions')
+      .get(`${knowledgeAreaRoute}/${knowledgeAreaId}/questions`)
       .toPromise();
     return JSON.parse(result['body']) as Question[];
   }
 
   public async getById(id: number): Promise<Question[]> {
     const result = await this.httpClient
-      .get(questionRoute + '/' + id)
+      .get(`${questionRoute}/${id}`)
       .toPromise();
     return JSON.parse(result['body']) as Question[];
   }

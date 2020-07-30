@@ -39,7 +39,7 @@ import { SharedModule } from '@shared/shared.module';
     AccordionModule.forRoot(),
     CollapseModule.forRoot(),
     InfiniteScrollModule,
-    SharedModule
+    SharedModule,
   ],
   providers: [
     {

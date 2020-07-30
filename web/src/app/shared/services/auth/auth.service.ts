@@ -13,9 +13,8 @@ export class AuthService {
   constructor(
     public jwtHelper: JwtHelperService,
     public userApiService: UserApiService,
-    private auth: AmplifyService
-    ) {
-  }
+    private auth: AmplifyService,
+  ) {}
   public async isAuthenticated() {
     try {
       const session = await Auth.currentSession();
@@ -23,10 +22,10 @@ export class AuthService {
       this.idToken = session.getIdToken().getJwtToken();
       if (!this.jwtHelper.isTokenExpired(accessToken)) {
         return true;
-     } else {
-       return false;
-     }
-    } catch ( err ) {
+      } else {
+        return false;
+      }
+    } catch (err) {
       console.log(err);
       return false;
     }
@@ -37,30 +36,34 @@ export class AuthService {
       const session = await Auth.currentSession();
       const idToken = session.getIdToken().decodePayload();
       return idToken;
-    } catch (err) {
-    }
+    } catch (err) {}
   }
 
   public async getCurrentUserId() {
     try {
       const user = await this.getCurrentUser();
       return user['userId'];
-    } catch (err) {
-    }
+    } catch (err) {}
+  }
+
+  public async getCurrentUserEmail() {
+    try {
+      const user = await this.getCurrentUser();
+      return user['email'];
+    } catch (err) {}
   }
 
   public async isAdmin() {
     try {
       const user = await this.getCurrentUser();
       return user['admin'];
-    } catch (err) {
-    }
+    } catch (err) {}
   }
 
   getToken() {
     const session = this.auth.auth();
     const token = get(session, 'user.signInUserSession.idToken.jwtToken');
-    if ( !token) {
+    if (!token) {
       return this.idToken;
     }
     this.idToken = token;

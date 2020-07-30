@@ -4,7 +4,8 @@
   "description": "WPO Audit Tool",
   "main": "index.js",
   "scripts": {
-    "web:run": "npm run start --prefix web",
+    "setup": "cd api && npm install && cd ../web && npm install && cd .. && npm install",
+    "web:run": "npm start --prefix web",
     "web:build": "npm run build:prod --prefix web",
     "api:run": "npm run offline:local --prefix api",
     "api:deploy": "npm run deploy --prefix api",

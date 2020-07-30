@@ -9,6 +9,12 @@
   border: none !important;
 }
 
+.admin-tile {
+  border-width: 2px;
+  border-color: $gray-200;
+  height:100%;
+}
+
 .input-group-text{
   border-right: none;
 }

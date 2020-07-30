@@ -1,9 +1,9 @@
-[{
-    "context": [
-        "/dev"
-    ],
+[
+  {
+    "context": ["/dev"],
     "target": "https://audit.winningproduct.com/",
     "secure": false,
     "changeOrigin": true,
     "logLevel": "debug"
-}]
+  }
+]
