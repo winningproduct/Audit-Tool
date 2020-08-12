@@ -1,4 +1,21 @@
 <div class="row" *ngIf="loader">
+  <div class="col-12 col-sm-12 mt-5 mb-5">
+    <div class="card border-0 bg-light">
+      <div class="card-body">
+        <div class="d-flex flex-row align-items-start">
+          <div class="d-flex flex-row">
+            <div class="mr-4">
+              <img src="../assets/img/greeting.png" height="64px" width="auto" />
+            </div>
+            <div>
+              <p class="h6">Hi, {{currentUserName}}</p>
+              <p>Welcome to the Administrator Panel!</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="col-12 col-sm-12 col-md-12 col-lg-12">
     <tabset>
       <tab heading="Assign Products to Users" id="tab1">
@@ -11,13 +28,13 @@
                     <div class="form-group" style="min-width:320px;">
                       Select Product
                       <ng-select class="custom-select" [items]="products" bindLabel="name" bindValue="id"
-                        formControlName="product" placeholder="Select Product">
+                        formControlName="product">
                       </ng-select>
                     </div>
                     <div class="form-group" style="min-width:320px;">
                       Select Users
                       <ng-select class="custom-select" [multiple]="true" [closeOnSelect]="false" [items]="users"
-                        bindLabel="email" bindValue="id" formControlName="userIds" placeholder="Select User">
+                        bindLabel="email" bindValue="id" formControlName="userIds">
                       </ng-select>
                     </div>
                     <button type="submit" class="btn btn-primary d-flex">
@@ -49,13 +66,13 @@
                     <div class="form-group" style="min-width:320px;">
                       Select Organization
                       <ng-select class="custom-select" [items]="organizations" bindLabel="name" bindValue="id"
-                        formControlName="organization" placeholder="Select Organization">
+                        formControlName="organization">
                       </ng-select>
                     </div>
                     <div class="form-group" style="min-width:320px;">
                       Select Users
                       <ng-select class="custom-select" [multiple]="true" [closeOnSelect]="false" [items]="users"
-                        bindLabel="email" bindValue="id" formControlName="userIds" placeholder="Select User">
+                        bindLabel="email" bindValue="id" formControlName="userIds">
                       </ng-select>
                     </div>
                     <button type="submit" class="btn btn-primary d-flex">

@@ -18,7 +18,8 @@ export class AdminComponent implements OnInit {
   users = [];
   products = [];
   organizations = [];
-  currentUser = null;
+  currentUserId = null;
+  currentUserName = "";
   faSpinner = faSpinner;
   loader = false;
 
@@ -70,7 +71,11 @@ export class AdminComponent implements OnInit {
   }
 
   async getCurrentUser() {
-    this.currentUser = await this.authService.getCurrentUserId();
+    const user = await this.authService.getCurrentUser();
+    if(user) {
+      this.currentUserId = user.userId;
+      this.currentUserName = user.given_name;
+    }
   }
 
   async addUserToProject() {
@@ -103,7 +108,7 @@ export class AdminComponent implements OnInit {
         product.description = description;
         product.organizationId = organization;
         product.users = userIds;
-        product.userId = this.currentUser;
+        product.userId = this.currentUserId;
 
         const result = await this.adminService.addProduct(product);
 
