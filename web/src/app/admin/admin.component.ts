@@ -19,7 +19,7 @@ export class AdminComponent implements OnInit {
   products = [];
   organizations = [];
   currentUserId = null;
-  currentUserName = "";
+  currentUserName = '';
   faSpinner = faSpinner;
   loader = false;
 
@@ -72,7 +72,7 @@ export class AdminComponent implements OnInit {
 
   async getCurrentUser() {
     const user = await this.authService.getCurrentUser();
-    if(user) {
+    if (user) {
       this.currentUserId = user.userId;
       this.currentUserName = user.given_name;
     }
