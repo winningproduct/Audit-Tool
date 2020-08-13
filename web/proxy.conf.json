@@ -1,9 +1,10 @@
 [
   {
     "context": ["/dev"],
-    "target": "https://audit.winningproduct.com/",
+    "target": "http://localhost:3000",
     "secure": false,
-    "changeOrigin": true,
-    "logLevel": "debug"
+    "changeOrigin": false,
+    "logLevel": "debug",
+    "pathRewrite": { "^/dev": "" }
   }
 ]
