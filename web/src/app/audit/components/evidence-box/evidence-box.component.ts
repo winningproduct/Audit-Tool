@@ -123,6 +123,7 @@ export class EvidenceBoxComponent implements OnInit, AfterViewInit {
     try {
       await this.evidenceService.post(qid, evidence);
       this.content = this.editor.getContent();
+
     } catch (error) {
       console.log(error);
     } finally {
@@ -162,6 +163,7 @@ export class EvidenceBoxComponent implements OnInit, AfterViewInit {
         sticky: false,
         updateOnEmptySelection: false,
       },
+      imageDragging: true,
     });
   }
 
