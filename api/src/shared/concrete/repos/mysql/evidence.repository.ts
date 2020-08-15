@@ -71,57 +71,55 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
       const user = await userRepository.findOneOrFail(_evidence.userId);
       evidence.user = user;
 
-      // Upload images to S3 and add url to img src ===================================================
-      const encodedImage:any = _evidence.content.match(/data:image\/([a-zA-Z]*);base64,([^\"]*)/g);
+      // Upload images to S3 and add url to img src ===========================================================================================
+      const filePath =
+        'https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
       let imageNumber = 0;
-      const filePath = "https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com"
 
-      if(encodedImage) {
-        encodedImage.map((image: any) => {
-          const params = {
-            Bucket: 'wp-audit-tool-evidance-assets',
-            Key: `${evidence.product.id}/${evidence.question.id}`,
-          };
-          s3.deleteObject(params, function(err, data) {
-            if (err) {
-              console.log('Error deleting existing data: ', data);
-              throw err;
-            } else {
-              console.log('succesfully deleted directory!', data);
-            }
+      const params = {
+        Bucket: 'wp-audit-tool-evidance-assets',
+        Delimiter: '/',
+        Prefix: `${evidence.product.id}/${evidence.question.id}/`,
+      };
+
+      await s3.listObjects(params, (err, data) => {
+        if (err) throw err;
+        if (data.Contents) imageNumber = data.Contents.length;
+
+        const encodedImage: any = evidence.content.match(
+          /data:image\/([a-zA-Z]*);base64,([^\"]*)/g,
+        );
+
+        if (encodedImage) {
+          encodedImage.map((image: any) => {
+            imageNumber++;
+            evidence.content = evidence.content.replace(
+              image,
+              `${filePath}/${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
+            );
+
+            const buf = Buffer.from(
+              image.replace(/^data:image\/\w+;base64,/, ''),
+              'base64',
+            );
+
+            const data = {
+              Key: `${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
+              Body: buf,
+              Bucket: 'wp-audit-tool-evidance-assets',
+              ContentEncoding: 'base64',
+              ContentType: 'image/jpeg',
+            };
+
+            s3.putObject(data, (err, data) => {
+              if (err) throw err;
+              console.log(data);
+            });
           });
+        }
+      }).promise();
+      // ========================================================================================================================================
 
-          imageNumber++;
-          evidence.content = evidence.content.replace(
-            image,
-            `${filePath}/${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
-          );
-
-          const buf = Buffer.from(
-            image.replace(/^data:image\/\w+;base64,/, ''),
-            'base64',
-          );
-
-          const data = {
-            Key: `${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
-            Body: buf,
-            Bucket: 'wp-audit-tool-evidance-assets',
-            ContentEncoding: 'base64',
-            ContentType: 'image/jpeg',
-          };
-
-          s3.putObject(data, function(err, data) {
-            if (err) {
-              console.log('Error uploading data: ', data);
-              throw err;
-            } else {
-              console.log('succesfully uploaded the image!', data);
-            }
-          });
-        });
-      }
-      // =========================================================================================
-      
       await connection.manager.save(evidence);
       return true;
 
