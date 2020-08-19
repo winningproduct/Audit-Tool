@@ -71,42 +71,26 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
 
       const user = await userRepository.findOneOrFail(_evidence.userId);
       evidence.user = user;
-      console.log(JSON.stringify(evidence.content));
-      // Upload images to S3 and add url to img src =============================================================================================
-      const filePath =
-        'https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
-      let imageNumber = 0;
 
-      const params = {
-        Bucket: 'wp-audit-tool-evidance-assets',
-        Delimiter: '/',
-        Prefix: `${evidence.product.id}/${evidence.question.id}/`,
-      };
+      // Upload images to S3 and add url to img src =============================================================================================
+      const filePath ='https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
 
       const encodedImages: any = evidence.content.match(
         /data:image\/([a-zA-Z]*);base64,([^\"]*)/g,
       );
 
-      console.log(encodedImages);
-
       if (encodedImages) {
+        const imageName = uuidv4();
+
         encodedImages.map((image: any) => {
           evidence.content = evidence.content.replace(
             image,
-            `${filePath}/${evidence.product.id}/${
-              evidence.question.id
-            }/${uuidv4()}.jpg`,
+            `${filePath}/${evidence.product.id}/${evidence.question.id}/${imageName}.jpg`,
           );
 
-          console.log('-----------------');
-          console.log(evidence.content);
-          console.log('----------------');
-
-          const newImageContent = evidence.content.replace(
+          evidence.content.replace(
             image,
-            `${filePath}/${evidence.product.id}/${
-              evidence.question.id
-            }/${uuidv4()}.jpg`,
+            `${filePath}/${evidence.product.id}/${evidence.question.id}/${imageName}.jpg`,
           );
 
           const buf = Buffer.from(
@@ -115,7 +99,7 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
           );
 
           const data = {
-            Key: `${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
+            Key: `${evidence.product.id}/${evidence.question.id}/${imageName}.jpg`,
             Body: buf,
             Bucket: 'wp-audit-tool-evidance-assets',
             ContentEncoding: 'base64',
