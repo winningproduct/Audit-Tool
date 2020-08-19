@@ -71,7 +71,7 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
       const user = await userRepository.findOneOrFail(_evidence.userId);
       evidence.user = user;
 
-      // Upload images to S3 and add url to img src ===========================================================================================
+      // Upload images to S3 and add url to img src =============================================================================================
       const filePath =
         'https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
       let imageNumber = 0;
@@ -82,16 +82,16 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
         Prefix: `${evidence.product.id}/${evidence.question.id}/`,
       };
 
-      await s3.listObjects(params, (err, data) => {
-        if (err) throw err;
-        if (data.Contents) imageNumber = data.Contents.length;
+      const encodedImages: any = evidence.content.match(
+        /data:image\/([a-zA-Z]*);base64,([^\"]*)/g,
+      );
 
-        const encodedImage: any = evidence.content.match(
-          /data:image\/([a-zA-Z]*);base64,([^\"]*)/g,
-        );
+      if (encodedImages) {
+        s3.listObjects(params, (err, data) => {
+          if (err) console.log(err);
+          if (data.Contents) imageNumber = data.Contents.length;
 
-        if (encodedImage) {
-          encodedImage.map((image: any) => {
+          encodedImages.map((image: any) => {
             imageNumber++;
             evidence.content = evidence.content.replace(
               image,
@@ -116,13 +116,12 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
               console.log(data);
             });
           });
-        }
-      }).promise();
+        });
+      }
       // ========================================================================================================================================
 
       await connection.manager.save(evidence);
       return true;
-
     } catch (err) {
       throw err;
     } finally {
