@@ -1,3 +1,4 @@
+import { v4 as uuidv4 } from 'uuid';
 import { IEvidenceRepository } from '../../../abstract/repos/evidence.repository';
 import { initMysql } from './connection.manager';
 import { mapDbItems, evidenceMapper } from './dbMapper';
@@ -70,7 +71,7 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
 
       const user = await userRepository.findOneOrFail(_evidence.userId);
       evidence.user = user;
-
+      console.log(JSON.stringify(evidence.content));
       // Upload images to S3 and add url to img src =============================================================================================
       const filePath =
         'https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
@@ -86,35 +87,44 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
         /data:image\/([a-zA-Z]*);base64,([^\"]*)/g,
       );
 
+      console.log(encodedImages);
+
       if (encodedImages) {
-        s3.listObjects(params, (err, data) => {
-          if (err) console.log(err);
-          if (data.Contents) imageNumber = data.Contents.length;
+        encodedImages.map((image: any) => {
+          evidence.content = evidence.content.replace(
+            image,
+            `${filePath}/${evidence.product.id}/${
+              evidence.question.id
+            }/${uuidv4()}.jpg`,
+          );
 
-          encodedImages.map((image: any) => {
-            imageNumber++;
-            evidence.content = evidence.content.replace(
-              image,
-              `${filePath}/${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
-            );
+          console.log('-----------------');
+          console.log(evidence.content);
+          console.log('----------------');
 
-            const buf = Buffer.from(
-              image.replace(/^data:image\/\w+;base64,/, ''),
-              'base64',
-            );
+          const newImageContent = evidence.content.replace(
+            image,
+            `${filePath}/${evidence.product.id}/${
+              evidence.question.id
+            }/${uuidv4()}.jpg`,
+          );
 
-            const data = {
-              Key: `${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
-              Body: buf,
-              Bucket: 'wp-audit-tool-evidance-assets',
-              ContentEncoding: 'base64',
-              ContentType: 'image/jpeg',
-            };
+          const buf = Buffer.from(
+            image.replace(/^data:image\/\w+;base64,/, ''),
+            'base64',
+          );
 
-            s3.putObject(data, (err, data) => {
-              if (err) throw err;
-              console.log(data);
-            });
+          const data = {
+            Key: `${evidence.product.id}/${evidence.question.id}/${imageNumber}.jpg`,
+            Body: buf,
+            Bucket: 'wp-audit-tool-evidance-assets',
+            ContentEncoding: 'base64',
+            ContentType: 'image/jpeg',
+          };
+
+          s3.putObject(data, (err, data) => {
+            if (err) throw err;
+            console.log(data);
           });
         });
       }
