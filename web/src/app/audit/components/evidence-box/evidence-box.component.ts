@@ -93,22 +93,27 @@ export class EvidenceBoxComponent implements OnInit, AfterViewInit {
   async getEvidenceByQuestionId(id: number, qid: number) {
     try {
       this.evidence = await this.evidenceService.get(id, qid);
-      if (this.evidence[0].status !== 'null') {
+      if (this.evidence[0] && this.evidence[0].status !== 'null') {
         this.ACount++;
         this.knowledgeAreaApiService.nextMessage(this.ACount);
       }
     } catch (error) {
       console.log(error);
     }
-    this.selectedStatus =
-      this.evidence.length > 0 &&
-      (
-        this.statusDropDowns.find(item => {
-          return item.value.includes(this.evidence[0].status);
-        }) || { id: null, value: '' }
-      ).id;
-    this.editor.setContent(this.evidence[0] ? this.evidence[0].content : '');
-    this.statusColor = this.statusColorValues[this.selectedStatus ? this.selectedStatus : 4].value;
+
+    if(this.evidence[0]) {
+      this.selectedStatus =
+        this.evidence.length > 0 &&
+        (
+          this.statusDropDowns.find((item) => {
+            return item.value.includes(this.evidence[0].status);
+          }) || { id: null, value: '' }
+        ).id;
+      this.editor.setContent(this.evidence[0] ? this.evidence[0].content : '');
+      this.statusColor = this.statusColorValues[
+        this.selectedStatus ? this.selectedStatus : 4
+      ].value;
+    }
   }
 
   async postEvidenceByQuestionId(qid: number, status: number) {

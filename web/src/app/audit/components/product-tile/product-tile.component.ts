@@ -21,10 +21,10 @@ export class ProductTileComponent implements OnInit {
   progress: any;
   score: number;
   colors = [
-    '#3498db' ,
+    '#3498db',
     '#e73c82',
     '#e67e22',
-    '#f1c40f' ,
+    '#f1c40f',
     '#2ecc71',
     '#3cd7e7',
   ];
@@ -32,7 +32,7 @@ export class ProductTileComponent implements OnInit {
     private userApiService: UserApiService,
     private spinner: NgxSpinnerService,
     private productApiService: ProductApiService
-    ) {}
+  ) {}
 
   async ngOnInit() {
     await this.getusers();
@@ -48,6 +48,6 @@ export class ProductTileComponent implements OnInit {
 
   async getProgress() {
     this.progress = await this.productApiService.getQuestionCount(this.product.id);
-    this.score = (this.progress[0].answerCount / this.progress[0].questionCount) * 100 ;
+    this.score = Math.trunc((this.progress[0].answerCount / this.progress[0].questionCount) * 100);
   }
 }

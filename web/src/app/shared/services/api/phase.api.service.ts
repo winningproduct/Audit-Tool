@@ -24,7 +24,6 @@ export class PhaseApiService {
         const result = await this.httpClient
           .get(`${questionRoute}Count/phase/${productId}/${phaseId}`)
           .toPromise();
-        return JSON.parse(result['body']);
+          return JSON.parse(result['body']);
     }
-
 }

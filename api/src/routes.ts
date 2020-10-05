@@ -84,6 +84,7 @@ export class Routes {
         questionId,
       );
     });
+
     this.path.get('knowledgeArea/:id/questions', async (req, _res) => {
       const knowledgeAreaId = Number(
         req.pathParameters ? req.pathParameters.id : null,
@@ -230,7 +231,7 @@ export class Routes {
       );
     });
 
-    this.path.get('questionCount/phase/:pid/:id:', async (req, _res) => {
+    this.path.get('questionCount/phase/:pid/:id', async (req, _res) => {
       const productId = req.pathParameters ? req.pathParameters.pid : 0;
       const phaseId = req.pathParameters ? req.pathParameters.id : 0;
       return await this.productService.getPhaseScore(
