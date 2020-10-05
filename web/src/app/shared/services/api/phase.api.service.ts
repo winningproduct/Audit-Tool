@@ -26,5 +26,4 @@ export class PhaseApiService {
           .toPromise();
         return JSON.parse(result['body']);
     }
-
 }
