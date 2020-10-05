@@ -101,7 +101,7 @@ export class EvidenceBoxComponent implements OnInit, AfterViewInit {
       console.log(error);
     }
 
-    if(this.evidence[0]) {
+    if (this.evidence[0]) {
       this.selectedStatus =
         this.evidence.length > 0 &&
         (
