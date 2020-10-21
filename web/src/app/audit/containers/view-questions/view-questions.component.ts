@@ -55,20 +55,23 @@ export class ViewQuestionsComponent implements OnInit {
       this.productId = +params['product-id'];
       this.phaseId = +params['product-phase-id'];
       this.knowledgeAreaId = +params['knowledge-area-id'];
+
       await this.getProductDetails(this.productId);
       await this.getPhaseDetailsByProductPhaseId(this.phaseId);
       await this.getKnowledgeAreasByPhaseId(this.phaseId);
       await this.getQuestionsByKnowledgeArea(this.knowledgeAreaId);
       await this.getKnowledgeAreaById(this.knowledgeAreaId);
       await this.getQuestionCount(this.knowledgeAreaId);
+
       this.knowledgeAreaApiService.sharedACount.subscribe(count => {
         this.ACount = count;
         if (this.QCount === 0 || this.ACount === 0) {
           this.score = 0;
         } else {
-        this.score = (this.ACount / this.QCount) * 100;
+          this.score = Math.trunc((this.ACount / this.QCount) * 100);
         }
       });
+
       this.hideSpinner();
     });
   }

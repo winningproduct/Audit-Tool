@@ -53,10 +53,11 @@ export class PhaseTileComponent implements OnInit {
       this.answerCount = this.answerCount + element.answerCount;
       this.questionCount = this.questionCount + element.questionCount;
     });
+    
     if (this.questionCount === 0) {
       this.score = 0;
     } else {
-    this.score = Math.trunc((this.answerCount / this.questionCount) * 100);
+      this.score = Math.trunc((this.answerCount / this.questionCount) * 100);
     }
   }
 }

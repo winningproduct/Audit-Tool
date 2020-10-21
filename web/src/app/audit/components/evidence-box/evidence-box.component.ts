@@ -174,7 +174,8 @@ export class EvidenceBoxComponent implements OnInit, AfterViewInit {
 
   async updateStatus(status: any) {
     this.isStatusUpdated = true;
-    const id = this.evidence[0].id;
+    const id = this.evidence[0] ? this.evidence[0].id : 0;
+
     this.statusColor = this.statusColorValues[status ? status.id : 4].value;
     try {
       if ( !status ) {
