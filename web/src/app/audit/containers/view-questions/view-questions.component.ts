@@ -56,12 +56,14 @@ export class ViewQuestionsComponent implements OnInit {
       this.phaseId = +params['product-phase-id'];
       this.knowledgeAreaId = +params['knowledge-area-id'];
 
-      await this.getProductDetails(this.productId);
-      await this.getPhaseDetailsByProductPhaseId(this.phaseId);
-      await this.getKnowledgeAreasByPhaseId(this.phaseId);
-      await this.getQuestionsByKnowledgeArea(this.knowledgeAreaId);
-      await this.getKnowledgeAreaById(this.knowledgeAreaId);
-      await this.getQuestionCount(this.knowledgeAreaId);
+      await Promise.all([
+        this.getProductDetails(this.productId),
+        this.getPhaseDetailsByProductPhaseId(this.phaseId),
+        this.getKnowledgeAreasByPhaseId(this.phaseId),
+        this.getQuestionsByKnowledgeArea(this.knowledgeAreaId),
+        this.getKnowledgeAreaById(this.knowledgeAreaId),
+        this.getQuestionCount(this.knowledgeAreaId),
+      ]);
 
       this.knowledgeAreaApiService.sharedACount.subscribe(count => {
         this.ACount = count;
@@ -72,7 +74,9 @@ export class ViewQuestionsComponent implements OnInit {
         }
       });
 
-      this.hideSpinner();
+      if (this.product && this.questions && this.knowledgeArea) {
+        this.hideSpinner();
+      }
     });
   }
 

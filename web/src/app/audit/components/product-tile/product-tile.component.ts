@@ -35,8 +35,7 @@ export class ProductTileComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
-    await this.getusers();
-    await this.getProgress();
+    await Promise.all([this.getusers(), this.getProgress()]);
   }
 
   async getusers() {
