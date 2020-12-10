@@ -51,11 +51,16 @@ export class AdminComponent implements OnInit {
 
   async ngOnInit() {
     this.showSpinner();
-    await this.getCurrentUser();
-    await this.getAllProducts();
-    await this.getAllUsers();
-    await this.getAllOrganizations();
-    this.hideSpinner();
+    await Promise.all([
+      this.getCurrentUser(),
+      this.getAllProducts(),
+      this.getAllUsers(),
+      this.getAllOrganizations(),
+    ]);
+
+    if (this.users && this.products && this.organizations && this.currentUserId && this.currentUserName) {
+      this.hideSpinner();
+    }
   }
 
   async getAllUsers() {
