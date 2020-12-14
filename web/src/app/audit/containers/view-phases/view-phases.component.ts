@@ -29,7 +29,7 @@ export class ViewPhasesComponent implements OnInit {
     this.sub = this.route.params.subscribe(async params => {
       this.showSpinner();
       this.id = +params['product-id'];
-      
+
       await Promise.all([
         this.getProductDetails(this.id),
         this.getAllPhases(this.id)

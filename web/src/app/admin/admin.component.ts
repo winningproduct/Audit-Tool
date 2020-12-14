@@ -180,10 +180,15 @@ export class AdminComponent implements OnInit {
       phone: [''],
     });
 
-    await this.getAllProducts();
-    await this.getAllUsers();
-    await this.getAllOrganizations();
-    this.hideSpinner();
+    await Promise.all([
+      this.getAllProducts(),
+      this.getAllUsers(),
+      this.getAllOrganizations(),
+    ]);
+
+    if (this.products && this.users && this.organizations) {
+      this.hideSpinner();
+    }
   }
 
   async showSpinner() {
