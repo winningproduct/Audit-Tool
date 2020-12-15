@@ -126,12 +126,18 @@ export class MySQLProductRepository implements IProductRepository {
       // Adding users to product
       if (_req.product.users.length > 0) {
         let query = `INSERT INTO product_users__user(productId,userId) VALUES `;
-        for (var i = 1; i <= _req.product.users.length; i++) {
-          query = query + `(${result.id},${_req.product.users[i - 1]})`;
-          if (i !== _req.product.users.length) {
+        // for (var i = 1; i <= _req.product.users.length; i++) {
+        //   query = query + `(${result.id},${_req.product.users[i - 1]})`;
+        //   if (i !== _req.product.users.length) {
+        //     query = query + ',';
+        //   }
+        // }
+        _req.product.users.map((user: any, index: any) => {
+          query = query + `(${result.id},${user})`;
+          if (index + 1 !== _req.product.users.length) {
             query = query + ',';
           }
-        }
+        });
 
         await connection.query(query);
       }

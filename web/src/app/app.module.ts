@@ -33,7 +33,7 @@ import { SharedModule } from '@shared/shared.module';
     HttpClientModule,
     AmplifyAngularModule,
     AvatarModule,
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: false }),
     BrowserAnimationsModule,
     MomentModule,
     AccordionModule.forRoot(),
@@ -53,8 +53,6 @@ import { SharedModule } from '@shared/shared.module';
     AuthService,
     AmplifyService,
     RoleGuardService,
-
-
   ],
   bootstrap: [AppComponent],
 })
