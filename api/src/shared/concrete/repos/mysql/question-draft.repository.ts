@@ -5,11 +5,9 @@ import { QuestionDraft as QuestionDraftEntity } from './entity/question_draft';
 import { mapDbItems, questionMapper } from './dbMapper';
 @injectable()
 export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
-  
   async getQuestionsByKnowledgeAreaId(
     knowledgeAreaId: number,
   ): Promise<Array<import('../../../models/question-draft').QuestionDraft>> {
-    
     let connection: any;
     try {
       connection = await initMysql();

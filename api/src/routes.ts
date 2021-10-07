@@ -39,7 +39,7 @@ export class Routes {
     this.userService = _userService;
     this.adminService = _adminService;
     this.questionDraftService = _questionDraftService;
-    
+
     this.initiateApi();
   }
 
@@ -94,7 +94,6 @@ export class Routes {
       const knowledgeAreaId = Number(
         req.pathParameters ? req.pathParameters.id : null,
       );
-      console.log(this.questionDraftService);
       return await this.questionDraftService.getQuestionsByKnowledgeArea(
         knowledgeAreaId,
       );

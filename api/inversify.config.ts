@@ -65,7 +65,7 @@ export class Inversify extends Container {
     );
 
     this.bind<IQuestionDraftRepository>(TYPES.QuestionDraftRepository).to(
-      MySQLQuestionDraftRepository
+      MySQLQuestionDraftRepository,
     );
 
     this.bind<IUserRepository>(TYPES.UserRepository).to(MySQLUserRepository);

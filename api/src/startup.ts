@@ -27,7 +27,7 @@ export const enrtyPoint: APIGatewayProxyHandler = async (
     userService,
     organizationService,
     adminService,
-    questionDraftService
+    questionDraftService,
   ).getPath();
 
   try {

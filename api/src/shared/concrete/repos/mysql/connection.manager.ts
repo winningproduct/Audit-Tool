@@ -35,7 +35,7 @@ export async function initMysql() {
         Evidence,
         ProductPhase,
         AuditDetail,
-        QuestionDraft
+        QuestionDraft,
       ],
       synchronize: true,
       logging: false,
