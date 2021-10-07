@@ -37,7 +37,7 @@ export async function initMysql() {
         AuditDetail,
         QuestionDraft,
       ],
-      synchronize: true,
+      synchronize: false,
       logging: false,
     });
     return con;
