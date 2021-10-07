@@ -70,17 +70,14 @@ export class MySQLUserRepository implements IUserRepository {
     }
   }
 
-  async assignProjectToUser(
-    productId: number,
-    userIds: [],
-  ): Promise<boolean> {
+  async assignProjectToUser(productId: number, userIds: []): Promise<boolean> {
     let connection: any;
     try {
       connection = await initMysql();
 
       if (userIds.length > 0) {
         let query = `INSERT INTO product_users__user(productId,userId) VALUES `;
-        for (var i = 1; i <= userIds.length; i++) {
+        for (let i = 1; i <= userIds.length; i++) {
           query = query + `(${productId},${userIds[i - 1]})`;
           if (i !== userIds.length) {
             query = query + ',';
@@ -88,10 +85,9 @@ export class MySQLUserRepository implements IUserRepository {
         }
 
         await connection.query(query);
-      } 
-      
-      return true;
+      }
 
+      return true;
     } catch (err) {
       throw err;
     } finally {

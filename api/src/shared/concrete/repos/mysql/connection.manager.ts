@@ -12,6 +12,7 @@ import { Question } from './entity/question';
 import { Revision } from './entity/revision';
 import { ProductPhase } from './entity/product_phase';
 import { AuditDetail } from './entity/audit_detail';
+import { QuestionDraft } from './entity/question_draft';
 
 export async function initMysql() {
   try {
@@ -34,6 +35,7 @@ export async function initMysql() {
         Evidence,
         ProductPhase,
         AuditDetail,
+        QuestionDraft
       ],
       synchronize: true,
       logging: false,

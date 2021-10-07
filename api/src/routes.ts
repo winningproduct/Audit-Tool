@@ -5,6 +5,7 @@ import { IKnowledgeAreaService } from 'knowledge-areas/interfaces/knowledge-area
 import { injectable } from 'inversify';
 import { IEvidenceService } from 'evidence/interfaces/evidence.interface';
 import { IQuestionService } from '@questions/interfaces/question.service.interface';
+import { IQuestionDraftService } from '@questions/interfaces/question-draft.service.interface';
 import { Evidence } from '@models/evidence';
 import { IUserService } from 'users/interfaces/user.service.interface';
 import { IOrganizationService } from 'organizations/interfaces/organization.service.interface';
@@ -17,6 +18,7 @@ export class Routes {
   private knowledgeAreaService: IKnowledgeAreaService;
   private evidenceService: IEvidenceService;
   private questionService: IQuestionService;
+  private questionDraftService: IQuestionDraftService;
   private userService: IUserService;
   private adminService: IAdminService;
 
@@ -28,6 +30,7 @@ export class Routes {
     _userService: IUserService,
     _organizationService: IOrganizationService,
     _adminService: IAdminService,
+    _questionDraftService: IQuestionDraftService,
   ) {
     this.evidenceService = _evidenceService;
     this.productService = _productService;
@@ -35,6 +38,8 @@ export class Routes {
     this.questionService = _questionService;
     this.userService = _userService;
     this.adminService = _adminService;
+    this.questionDraftService = _questionDraftService;
+    
     this.initiateApi();
   }
 
@@ -89,7 +94,8 @@ export class Routes {
       const knowledgeAreaId = Number(
         req.pathParameters ? req.pathParameters.id : null,
       );
-      return await this.questionService.getQuestionsByKnowledgeArea(
+      console.log(this.questionDraftService);
+      return await this.questionDraftService.getQuestionsByKnowledgeArea(
         knowledgeAreaId,
       );
     });

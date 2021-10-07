@@ -61,10 +61,8 @@ export class MySQLOrganizationRepository implements IOrganizationRepository {
 
       const result = await connection.manager.save(organization);
       return true;
-
     } catch (err) {
       throw err;
-
     } finally {
       if (connection != null) {
         await connection.close();
