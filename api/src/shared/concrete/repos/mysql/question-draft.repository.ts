@@ -2,7 +2,7 @@ import { initMysql } from './connection.manager';
 import { IQuestionDraftRepository } from '../../../abstract/repos/question-draft.repository';
 import { injectable } from 'inversify';
 import { QuestionDraft as QuestionDraftEntity } from './entity/question_draft';
-import { mapDbItems, questionMapper } from './dbMapper';
+import { mapDbItems, questionMapper, questionDraftMapper } from './dbMapper';
 @injectable()
 export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
   async getQuestionsByKnowledgeAreaId(
@@ -18,9 +18,8 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
           knowledgeAreaId,
         })
         .orderBy('question.majorVersion', 'DESC')
-        .take(1)
         .getRawMany();
-      return mapDbItems(result, questionMapper);
+      return mapDbItems(result, questionDraftMapper);
     } catch (err) {
       throw err;
     } finally {

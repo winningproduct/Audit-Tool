@@ -3,7 +3,8 @@ import { BaseEntity } from './baseEntity';
 export class QuestionDraft extends BaseEntity {
   id!: number;
   orderId!: number;
-  questionDescription!: string;
+  title!: string;
+  description!: string;
   version!: string;
   knowledgeAreaId!: number;
   majorVersion!: number;
