@@ -49,7 +49,7 @@ export function questionDraftMapper(question_draft: any): QuestionDraft {
     orderId: question_draft.question_orderId,
     title: question_draft.question_title,
     description: question_draft.question_description,
-    version: question_draft.version,
+    version: question_draft.question_version,
     knowledgeAreaId: question_draft.question_knowledgeAreaId,
     majorVersion: question_draft.question_majorVersion,
     minorVersion: question_draft.question_minorVersion,

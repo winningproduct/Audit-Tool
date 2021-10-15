@@ -18,8 +18,23 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
           knowledgeAreaId,
         })
         .orderBy('question.majorVersion', 'DESC')
+        .addOrderBy('question.minorVersion', 'DESC')
+        .addOrderBy('question.patchVersion', 'DESC')
         .getRawMany();
-      return mapDbItems(result, questionDraftMapper);
+      const mappedItems = mapDbItems(result, questionDraftMapper);
+      let orderIds = [];
+      const latestItems = [];
+      for (const item in mappedItems){
+        orderIds.push(mappedItems[item].orderId);
+      }
+      orderIds = [...new Set(orderIds)];
+      for (const key in orderIds){
+        const sameOrderId = mappedItems.filter(item => {
+          return item.orderId == orderIds[key];
+        });
+        latestItems.push(sameOrderId[sameOrderId.length - 1]);
+      }
+      return latestItems;
     } catch (err) {
       throw err;
     } finally {
