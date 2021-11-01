@@ -1,7 +1,7 @@
 import { initMysql } from './connection.manager';
 import { IQuestionDraftRepository } from '../../../abstract/repos/question-draft.repository';
 import { injectable } from 'inversify';
-import { QuestionDraft as QuestionDraftEntity } from './entity/question_draft';
+import { Question as QuestionDraftEntity } from './entity/question';
 import { mapDbItems, questionMapper, questionDraftMapper } from './dbMapper';
 @injectable()
 export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
@@ -22,7 +22,7 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
         .addOrderBy('question.patchVersion', 'DESC')
         .getRawMany();
       const mappedItems = mapDbItems(result, questionDraftMapper);
-      let orderIds = [];
+      let orderIds:any[] = [];
       const latestItems = [];
       for (const item in mappedItems){
         orderIds.push(mappedItems[item].orderId);

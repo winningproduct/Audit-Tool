@@ -1,21 +1,14 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  ManyToOne,
-  OneToMany,
-} from 'typeorm';
-import { KnowledgeArea } from './knowledge_area';
-import { Revision } from './revision';
-import { User } from './user';
-import { Evidence } from './evidence';
+import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
 
-const ENTITY_NAME = 'Question';
+const ENTITY_NAME = 'Question_Draft';
 
 @Entity(ENTITY_NAME)
 export class Question {
   @PrimaryGeneratedColumn()
   id!: number;
+
+  @Column()
+  orderId!: number;
 
   @Column()
   title!: string;
@@ -26,30 +19,15 @@ export class Question {
   @Column()
   version!: string;
 
-  @Column({ type: 'timestamp', default: () => 'CURRENT_TIMESTAMP' })
-  createdDate!: Date;
+  @Column()
+  knowledgeAreaId!: number;
 
-  @ManyToOne(
-    type => KnowledgeArea,
-    knowledgeArea => knowledgeArea.questions,
-  )
-  knowledgeArea!: KnowledgeArea;
+  @Column()
+  majorVersion!: number;
 
-  @ManyToOne(
-    type => Revision,
-    revision => revision.questions,
-  )
-  revision!: Revision;
+  @Column()
+  minorVersion!: number;
 
-  @ManyToOne(
-    type => User,
-    user => user.questions,
-  )
-  user!: User;
-
-  @OneToMany(
-    type => Evidence,
-    evidence => evidence.question,
-  )
-  evidences!: Evidence[];
+  @Column()
+  patchVersion!: number;
 }
