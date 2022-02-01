@@ -1,6 +1,7 @@
 import { Product } from '@models/product';
 import { KnowledgeArea } from '@models/knowledge-area';
 import { Question } from '@models/question';
+import { QuestionDraft } from '@models/question-draft';
 import { Phase } from '@models/phase';
 import { User } from '@models/user';
 import { Organization } from '@models/organization';
@@ -40,6 +41,20 @@ export function questionMapper(question: any): Question {
     version: question.question_version,
     createdDate: question.question_createdDate,
   } as Question;
+}
+
+export function questionDraftMapper(question_draft: any): QuestionDraft {
+  return {
+    id: question_draft.question_id,
+    orderId: question_draft.question_orderId,
+    title: question_draft.question_title,
+    description: question_draft.question_description,
+    version: question_draft.question_version,
+    knowledgeAreaId: question_draft.question_knowledgeAreaId,
+    majorVersion: question_draft.question_majorVersion,
+    minorVersion: question_draft.question_minorVersion,
+    patchVersion: question_draft.question_patchVersion,
+  } as QuestionDraft;
 }
 
 export function phasesMapper(phase: any): Phase {

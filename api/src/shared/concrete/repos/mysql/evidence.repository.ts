@@ -12,7 +12,7 @@ import { Question } from './entity/question';
 
 // To upload to S3
 import AWS from 'aws-sdk';
-var s3 = new AWS.S3();
+const s3 = new AWS.S3();
 
 @injectable()
 export class MySQLEvidenceRepository implements IEvidenceRepository {
@@ -73,7 +73,8 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
       evidence.user = user;
 
       // Upload images to S3 and add url to img src =============================================================================================
-      const filePath ='https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
+      const filePath =
+        'https://wp-audit-tool-evidance-assets.s3-ap-southeast-1.amazonaws.com';
 
       const encodedImages: any = evidence.content.match(
         /data:image\/([a-zA-Z]*);base64,([^\"]*)/g,
@@ -107,7 +108,9 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
           };
 
           s3.putObject(data, (err, data) => {
-            if (err) throw err;
+            if (err) {
+              throw err;
+            }
             console.log(data);
           });
         });

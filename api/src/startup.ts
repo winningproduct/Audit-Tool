@@ -11,6 +11,7 @@ export const enrtyPoint: APIGatewayProxyHandler = async (
   const inversifyContainer = new Inversify();
   const productService = inversifyContainer.getProductService();
   const questionService = inversifyContainer.getQuestionService();
+  const questionDraftService = inversifyContainer.getQuestionDraftService();
   const knowledgeAreaService = inversifyContainer.getKnowledgeAreaService();
   const evidenceService = inversifyContainer.getEvidenceService();
   const userService = inversifyContainer.getUserService();
@@ -26,27 +27,25 @@ export const enrtyPoint: APIGatewayProxyHandler = async (
     userService,
     organizationService,
     adminService,
+    questionDraftService,
   ).getPath();
 
   try {
     let eventPolifil: APIGatewayProxyEvent;
-    
+
     if (event.requestPath) {
       const httpMethod = event.method;
       const pathParameters = event.path;
       const path = event.requestPath;
       eventPolifil = { ...event, path, pathParameters, httpMethod };
-
     } else {
       eventPolifil = event;
     }
 
     const result = await pathController.run(eventPolifil, _context);
     return result;
-
   } catch (err) {
     return handleError(err, logger);
-
   } finally {
     inversifyContainer.destroyContainer();
   }

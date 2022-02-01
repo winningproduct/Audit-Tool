@@ -141,7 +141,7 @@ export class MySQLProductRepository implements IProductRepository {
 
         await connection.query(query);
       }
-        
+
       return true;
     } catch (err) {
       throw err;

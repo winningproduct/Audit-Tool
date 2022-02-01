@@ -35,7 +35,7 @@ export async function initMysql() {
         ProductPhase,
         AuditDetail,
       ],
-      synchronize: true,
+      synchronize: false,
       logging: false,
     });
     return con;

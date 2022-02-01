@@ -17,6 +17,7 @@ import { MySQLKnowledgeAreaRepository } from './src/shared/concrete/repos/mysql/
 import { MySQLQuestionRepository } from './src/shared/concrete/repos/mysql/question.repository';
 import { ProductService } from '@products/services/product.service';
 import { QuestionService } from '@questions/services/question.service';
+import { QuestionDraftService } from '@questions/services/question-draft.service';
 import { IKnowledgeAreaService } from 'knowledge-areas/interfaces/knowledge-area.service.interface';
 import { IEvidenceService } from 'evidence/interfaces/evidence.interface';
 import { EvidenceService } from 'evidence/services/evidence.service';
@@ -30,6 +31,9 @@ import { IUserService } from 'users/interfaces/user.service.interface';
 import { UserService } from 'users/services/user.service';
 import { IAdminService } from 'admin/interfaces/admin.service.interface';
 import { AdminService } from 'admin/services/admin.service';
+import { IQuestionDraftService } from '@questions/interfaces/question-draft.service.interface';
+import { IQuestionDraftRepository } from '@repos/question-draft.repository';
+import { MySQLQuestionDraftRepository } from 'shared/concrete/repos/mysql/question-draft.repository';
 
 export class Inversify extends Container {
   constructor() {
@@ -60,6 +64,10 @@ export class Inversify extends Container {
       MySQLQuestionRepository,
     );
 
+    this.bind<IQuestionDraftRepository>(TYPES.QuestionDraftRepository).to(
+      MySQLQuestionDraftRepository,
+    );
+
     this.bind<IUserRepository>(TYPES.UserRepository).to(MySQLUserRepository);
   }
 
@@ -77,6 +85,10 @@ export class Inversify extends Container {
 
   getQuestionService() {
     return this.resolve<IQuestionService>(QuestionService);
+  }
+
+  getQuestionDraftService() {
+    return this.resolve<IQuestionDraftService>(QuestionDraftService);
   }
 
   getOrganizationService() {
