@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+} from 'typeorm';
+
+import { KnowledgeArea } from './knowledge_area';
+import { Evidence } from './evidence';
 
 const ENTITY_NAME = 'Question_Draft';
 
@@ -18,9 +27,12 @@ export class Question {
 
   @Column()
   version!: string;
-
-  @Column()
-  knowledgeAreaId!: number;
+  
+  @ManyToOne(
+    type => KnowledgeArea,
+    knowledgeArea => knowledgeArea.questions,
+  )
+  knowledgeArea!: KnowledgeArea;
 
   @Column()
   majorVersion!: number;
@@ -30,4 +42,11 @@ export class Question {
 
   @Column()
   patchVersion!: number;
+
+  @OneToMany(
+    type => Evidence,
+    evidence => evidence.question,
+  )
+  evidences!: Evidence[];
+
 }

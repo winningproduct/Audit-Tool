@@ -14,6 +14,8 @@ export class QuestionApiService {
       .get(`${knowledgeAreaRoute}/${knowledgeAreaId}/questions`)
       .toPromise();
     return JSON.parse(result['body']) as Question[];
+    
+    
   }
 
   public async getById(id: number): Promise<Question[]> {
