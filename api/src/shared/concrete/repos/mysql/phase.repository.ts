@@ -6,6 +6,7 @@ import { mapDbItems, phasesMapper, phaseScoreMapper } from './dbMapper';
 import { ProductPhase } from './entity/product_phase';
 import { KnowledgeArea as KnowledgeAreaEntity } from './entity/knowledge_area';
 import { Evidence as EvidenceEntity } from './entity/evidence';
+import {Question as Question_Draft} from './entity/question';
 
 @injectable()
 export class MYSQLPhaseRepository implements IPhaseRepository {
@@ -67,6 +68,7 @@ export class MYSQLPhaseRepository implements IPhaseRepository {
           { productId },
         )
         .andWhere('evidence.status != "null"')
+        .andWhere('knowledgeAreas.phaseId = :phaseId', { phaseId })
         .groupBy('questions.knowledgeArea')
         .getRawMany();
 
@@ -80,7 +82,7 @@ export class MYSQLPhaseRepository implements IPhaseRepository {
         .where('phases.id = :phaseId', { phaseId })
         .groupBy('knowledgeArea.id')
         .getRawMany();
-
+      
       return phaseScoreMapper(AnswerCount, QuestionCount);
     } catch (err) {
       throw err;

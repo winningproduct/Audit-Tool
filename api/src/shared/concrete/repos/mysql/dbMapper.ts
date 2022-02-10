@@ -5,6 +5,7 @@ import { QuestionDraft } from '@models/question-draft';
 import { Phase } from '@models/phase';
 import { User } from '@models/user';
 import { Organization } from '@models/organization';
+import { print } from 'util';
 
 export function mapDbItems(result: any, mapper: any): any {
   return Object.keys(result).map(key => {
@@ -146,16 +147,37 @@ export function evidenceDateMapper(evidence: any) {
 
 export function phaseScoreMapper(result1: any, result2: any) {
   const score: any = [];
-  for (const answer of result1) {
-    for (const question of result2) {
-      if (answer.knowledgeAreaId === question.knowledgeArea_id) {
+  let count: number = 0;
+  console.log(result2);
+  for (const question of result2) {
+    for (const answer of result1) {
+           
+      if (question.knowledgeArea_id === answer.knowledgeAreaId) {
+        
         const obj = {
-          knowledgeId: answer.knowledgeAreaId,
+          knowledgeId: question.knowledgeArea_id,
           answerCount: answer.AnswerCount,
-          questionCount: question.QuestionCount,
+          questionCount: question.QuestionCount, 
         };
+
+        count++;
         score.push(obj);
+        break;
       }
+      
+    }
+
+    if(count == 0){
+      const obj = {
+        knowledgeId: question.knowledgeArea_id,
+        answerCount: 0,
+        questionCount: question.QuestionCount,
+      };
+      
+      score.push(obj);
+    }
+    else{
+      count = 0;
     }
   }
   return score;

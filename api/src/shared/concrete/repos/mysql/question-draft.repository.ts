@@ -24,6 +24,9 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
       const mappedItems = mapDbItems(result, questionDraftMapper);
       let orderIds:any[] = [];
       const latestItems = [];
+      let latestitem;
+      let ver: string;
+
       for (const item in mappedItems){
         orderIds.push(mappedItems[item].orderId);
       }
@@ -32,8 +35,19 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
         const sameOrderId = mappedItems.filter(item => {
           return item.orderId == orderIds[key];
         });
-        latestItems.push(sameOrderId[sameOrderId.length - 1]);
+
+        ver = sameOrderId[0].version;
+        latestitem = sameOrderId[0];
+
+        for(const sameorder in sameOrderId){
+          if(ver < sameOrderId[sameorder].version){
+            ver = sameOrderId[sameorder].version;
+            latestitem = sameOrderId[sameorder];
+          }
+        }
+        latestItems.push(latestitem);
       }
+      console.log(latestItems);
       return latestItems;
     } catch (err) {
       throw err;
@@ -43,6 +57,7 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
       }
     }
   }
+
   get(_itemId: number): import('../../../models/question-draft').QuestionDraft {
     throw new Error('Method not implemented.');
   }

@@ -47,6 +47,7 @@ export class ProductTileComponent implements OnInit {
 
   async getProgress() {
     this.progress = await this.productApiService.getQuestionCount(this.product.id);
+    console.log(this.progress[0].answerCount + ' ' + this.progress[0].questionCount);
     this.score = Math.trunc((this.progress[0].answerCount / this.progress[0].questionCount) * 100);
   }
 }
