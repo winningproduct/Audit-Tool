@@ -51,29 +51,7 @@ export class MySQLKnowledgeAreaRepository implements IKnowledgeAreaRepository {
     }
   }
 
-  // Knowledge Area Score
-  // async getQuestionCount(_id: number): Promise<any> {
-  //   let connection: any;
-  //   try {
-  //     connection = await initMysql();
-  //     const result = await connection
-  //       .getRepository(KnowledgeAreaEntity)
-  //       .createQueryBuilder('knowledgeArea')
-  //       .innerJoin('knowledgeArea.questions', 'question')
-  //       .select('question')
-  //       .where('knowledgeArea.id = :Id', { Id: _id })
-  //       .getRawMany();
-    
-  //     return result;
-  //   } catch (err) {
-  //     throw err;
-  //   } finally {
-  //     if (connection != null) {
-  //       await connection.close();
-  //     }
-  //   }
-  // }
-
+  
   get(_itemId: number): import('../../../models/knowledge-area').KnowledgeArea {
     throw new Error('Method not implemented.');
   }

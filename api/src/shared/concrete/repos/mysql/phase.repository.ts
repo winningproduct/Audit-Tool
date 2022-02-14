@@ -2,11 +2,11 @@ import { Phase } from './../../../models/phase';
 import { IPhaseRepository } from '../../../abstract/repos/phase.repository.interface';
 import { injectable } from 'inversify';
 import { initMysql } from './connection.manager';
-import { mapDbItems, phasesMapper, phaseScoreMapper } from './dbMapper';
+import { mapDbItems, phasesMapper, phaseScoreMapper, knowledgeAreaMapper } from './dbMapper';
 import { ProductPhase } from './entity/product_phase';
 import { KnowledgeArea as KnowledgeAreaEntity } from './entity/knowledge_area';
 import { Evidence as EvidenceEntity } from './entity/evidence';
-import {Question as Question_Draft} from './entity/question';
+import {Question as QuestionEntity} from './entity/question';
 
 @injectable()
 export class MYSQLPhaseRepository implements IPhaseRepository {
@@ -80,6 +80,7 @@ export class MYSQLPhaseRepository implements IPhaseRepository {
         .select('knowledgeArea.id')
         .addSelect('COUNT(*) AS QuestionCount')
         .where('phases.id = :phaseId', { phaseId })
+        .andWhere('questions.version IN (SELECT MAX(Question_Draft.version) FROM Question_Draft WHERE Question_Draft.knowledgeAreaId = knowledgeArea.id AND questions.orderId = Question_Draft.orderId GROUP BY Question_Draft.orderId)')
         .groupBy('knowledgeArea.id')
         .getRawMany();
       

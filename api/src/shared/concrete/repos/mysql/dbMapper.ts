@@ -148,7 +148,7 @@ export function evidenceDateMapper(evidence: any) {
 export function phaseScoreMapper(result1: any, result2: any) {
   const score: any = [];
   let count: number = 0;
-  console.log(result2);
+  
   for (const question of result2) {
     for (const answer of result1) {
            
@@ -185,9 +185,10 @@ export function phaseScoreMapper(result1: any, result2: any) {
 
 export function productScoreMapper(result1: any, result2: any) {
   const score: any = [];
+  console.log(result2.length);
   const obj = {
     answerCount: result1[0].AnswerCount,
-    questionCount: result2[0].QuestionCount,
+    questionCount: result2.length
   };
   score.push(obj);
   return score;
