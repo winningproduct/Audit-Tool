@@ -28,8 +28,8 @@ export class KnowledgeAreaService implements IKnowledgeAreaService {
     return await this.knowledgeAreaRepository.getKnowledgeAreasById(id);
   }
 
-  async getKnowledgeAreaScore(id: number) {
-    return await this.questionDraftRepository.getQuestionsByKnowledgeAreaId(id);
+  async getKnowledgeAreaScore(id: number, productId: number) {
+    return await this.questionDraftRepository.getQuestionsByKnowledgeAreaId(id, productId);
   }
 
 }

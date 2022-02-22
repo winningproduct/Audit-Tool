@@ -2,11 +2,14 @@ import { initMysql } from './connection.manager';
 import { IQuestionDraftRepository } from '../../../abstract/repos/question-draft.repository';
 import { injectable } from 'inversify';
 import { Question as QuestionDraftEntity } from './entity/question';
-import { mapDbItems, questionMapper, questionDraftMapper } from './dbMapper';
+import{ Evidence as EvidenceEntity } from './entity/evidence';
+import { mapDbItems, questionMapper, questionDraftMapper, evidenceMapper } from './dbMapper';
+import { Evidence } from '@models/evidence';
 @injectable()
 export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
   async getQuestionsByKnowledgeAreaId(
     knowledgeAreaId: number,
+    productId: number
   ): Promise<Array<import('../../../models/question-draft').QuestionDraft>> {
     let connection: any;
     try {
@@ -21,16 +24,43 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
         .addOrderBy('question.minorVersion', 'DESC')
         .addOrderBy('question.patchVersion', 'DESC')
         .getRawMany();
+
       const mappedItems = mapDbItems(result, questionDraftMapper);
+      
       let orderIds:any[] = [];
+      let questionIds:any[] = [];
+      let evidencequestionIds = new Set();
       const latestItems = [];
       let latestitem;
       let ver: string;
+      
 
       for (const item in mappedItems){
         orderIds.push(mappedItems[item].orderId);
       }
+
+      for (const item in mappedItems){
+        questionIds.push(mappedItems[item].id);
+      }
+      
+
+      const evidence = await connection
+        .getRepository(EvidenceEntity)
+        .createQueryBuilder('evidence')
+        .where('evidence.questionId IN (:questionIds)', {questionIds})
+        .andWhere('evidence.status != "null"')
+        .andWhere('evidence.productId = :productId', {productId})
+        .getRawMany();
+
+      
+      
+      for (const item in evidence){
+          evidencequestionIds.add(evidence[item].evidence_questionId);
+      }
+      
+      
       orderIds = [...new Set(orderIds)];
+      
       for (const key in orderIds){
         const sameOrderId = mappedItems.filter(item => {
           return item.orderId == orderIds[key];
@@ -38,16 +68,17 @@ export class MySQLQuestionDraftRepository implements IQuestionDraftRepository {
 
         ver = sameOrderId[0].version;
         latestitem = sameOrderId[0];
+        
 
         for(const sameorder in sameOrderId){
-          if(ver < sameOrderId[sameorder].version){
-            ver = sameOrderId[sameorder].version;
+          if(evidencequestionIds.has(sameOrderId[sameorder].id)){
             latestitem = sameOrderId[sameorder];
+            break;
           }
         }
         latestItems.push(latestitem);
       }
-      console.log(latestItems);
+      
       return latestItems;
     } catch (err) {
       throw err;

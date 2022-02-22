@@ -90,12 +90,18 @@ export class Routes {
       );
     });
 
-    this.path.get('knowledgeArea/:id/questions', async (req, _res) => {
+    this.path.get('knowledgeArea/:pid/:id/questions', async (req, _res) => {
       const knowledgeAreaId = Number(
         req.pathParameters ? req.pathParameters.id : null,
       );
+
+      const productId =  Number(
+        req.pathParameters ? req.pathParameters.pid : null,
+      );
+
       return await this.questionDraftService.getQuestionsByKnowledgeArea(
         knowledgeAreaId,
+        productId,
       );
     });
 

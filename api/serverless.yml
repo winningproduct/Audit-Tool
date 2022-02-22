@@ -68,7 +68,7 @@ functions:
             arn: ${env:ARN}
       - http:
           method: get
-          path: knowledgeArea/{id}/questions
+          path: knowledgeArea/{pid}/{id}/questions
           integration: lambda
           authorizer:
             name: authorizer

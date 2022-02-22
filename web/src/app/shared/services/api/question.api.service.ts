@@ -9,9 +9,10 @@ import { knowledgeAreaRoute, questionRoute } from '../../constants';
 export class QuestionApiService {
   constructor(private httpClient: HttpClient) {}
 
-  public async get(knowledgeAreaId: number): Promise<Question[]> {
+  public async get(knowledgeAreaId: number, productId: number): Promise<Question[]> {
+    
     const result = await this.httpClient
-      .get(`${knowledgeAreaRoute}/${knowledgeAreaId}/questions`)
+      .get(`${knowledgeAreaRoute}/${productId}/${knowledgeAreaId}/questions`)
       .toPromise();
     return JSON.parse(result['body']) as Question[];
 

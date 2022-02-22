@@ -185,7 +185,6 @@ export function phaseScoreMapper(result1: any, result2: any) {
 
 export function productScoreMapper(result1: any, result2: any) {
   const score: any = [];
-  console.log(result2.length);
   const obj = {
     answerCount: result1[0].AnswerCount,
     questionCount: result2.length

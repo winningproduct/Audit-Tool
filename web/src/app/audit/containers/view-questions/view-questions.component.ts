@@ -60,7 +60,7 @@ export class ViewQuestionsComponent implements OnInit {
         this.getProductDetails(this.productId),
         this.getPhaseDetailsByProductPhaseId(this.phaseId),
         this.getKnowledgeAreasByPhaseId(this.phaseId),
-        this.getQuestionsByKnowledgeArea(this.knowledgeAreaId),
+        this.getQuestionsByKnowledgeArea(this.knowledgeAreaId, this.productId),
         this.getKnowledgeAreaById(this.knowledgeAreaId),
         this.getQuestionCount(this.knowledgeAreaId),
       ]);
@@ -103,8 +103,8 @@ export class ViewQuestionsComponent implements OnInit {
     this.phase = await this.phaseApiService.getPhaseByProductPhaseId(id);
   }
 
-  async getQuestionsByKnowledgeArea(id: number) {
-    this.questions = await this.questionApiService.get(id);
+  async getQuestionsByKnowledgeArea(id: number, prId: number) {
+    this.questions = await this.questionApiService.get(id, prId);
     this.length = this.questions.length;
   }
 

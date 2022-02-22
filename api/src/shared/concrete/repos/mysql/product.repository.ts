@@ -193,8 +193,7 @@ export class MySQLProductRepository implements IProductRepository {
         .select('DISTINCT questions.knowledgeAreaId, questions.orderId')
         .orderBy('questions.knowledgeAreaId', 'ASC')
         .getRawMany();
-
-      console.log(QuestionCount);
+        
       return productScoreMapper(AnswerCount, QuestionCount);
     } catch (err) {
       throw err;
