@@ -72,7 +72,7 @@ export class ViewQuestionsComponent implements OnInit {
         } else {
           this.score = Math.trunc((this.ACount / this.QCount) * 100);
         }
-        console.log(this.QCount + ' ' + this.ACount);
+        
       });
 
       if (this.product && this.questions && this.knowledgeArea) {
@@ -87,7 +87,6 @@ export class ViewQuestionsComponent implements OnInit {
 
   async getQuestionCount(id: number) {
     this.QCount = await this.knowledgeAreaApiService.getQuestionCount(id);
-    console.log(this.QCount);
     this.QCount = this.QCount.length;
   }
 

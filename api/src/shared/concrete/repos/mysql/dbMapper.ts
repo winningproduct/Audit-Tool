@@ -148,10 +148,10 @@ export function evidenceDateMapper(evidence: any) {
 export function phaseScoreMapper(result1: any, result2: any) {
   const score: any = [];
   let count: number = 0;
-  
+
   for (const question of result2) {
-    for (const answer of result1) {
-           
+    for (const answer of result1) { 
+        
       if (question.knowledgeArea_id === answer.knowledgeAreaId) {
         
         const obj = {
