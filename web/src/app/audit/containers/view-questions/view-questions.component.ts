@@ -62,7 +62,7 @@ export class ViewQuestionsComponent implements OnInit {
         this.getKnowledgeAreasByPhaseId(this.phaseId),
         this.getQuestionsByKnowledgeArea(this.knowledgeAreaId, this.productId),
         this.getKnowledgeAreaById(this.knowledgeAreaId),
-        this.getQuestionCount(this.knowledgeAreaId),
+        this.getQuestionCount(this.knowledgeAreaId, this.productId),
       ]);
 
       this.knowledgeAreaApiService.sharedACount.subscribe(count => {
@@ -72,7 +72,7 @@ export class ViewQuestionsComponent implements OnInit {
         } else {
           this.score = Math.trunc((this.ACount / this.QCount) * 100);
         }
-        
+
       });
 
       if (this.product && this.questions && this.knowledgeArea) {
@@ -85,8 +85,8 @@ export class ViewQuestionsComponent implements OnInit {
     this.items = await this.knowledgeAreaApiService.get(id);
   }
 
-  async getQuestionCount(id: number) {
-    this.QCount = await this.knowledgeAreaApiService.getQuestionCount(id);
+  async getQuestionCount(id: number, prId: number) {
+    this.QCount = await this.knowledgeAreaApiService.getQuestionCount(id, prId);
     this.QCount = this.QCount.length;
   }
 
