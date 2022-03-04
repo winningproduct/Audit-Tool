@@ -235,10 +235,12 @@ export class Routes {
     });
 
     // For Progress Bar
-    this.path.get('questionCount/knowledgeArea/:id', async (req, _res) => {
+    this.path.get('questionCount/knowledgeArea/:pid/:id', async (req, _res) => {
       const knowledgeAreaId = req.pathParameters ? req.pathParameters.id : 0;
+      const productId = req.pathParameters ? req.pathParameters.pid : 0;
       return await this.knowledgeAreaService.getKnowledgeAreaScore(
         Number(knowledgeAreaId),
+        Number(productId),
       );
     });
 
