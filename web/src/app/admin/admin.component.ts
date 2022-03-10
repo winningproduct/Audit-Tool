@@ -65,8 +65,8 @@ export class AdminComponent implements OnInit {
   async getAllUsers() {
     this.users = await this.adminService.getAllUsers();
   }
-  
-  async getNoneProductUsers(){
+
+  async getNoneProductUsers() {
 
     const { product, userIds } = this.productUserForm.value;
 
@@ -91,7 +91,7 @@ export class AdminComponent implements OnInit {
 
   async addUserToProject() {
     const { product, userIds } = this.productUserForm.value;
-    
+
     if (product && userIds) {
       const result = await this.adminService.addProductUser(product, userIds);
 

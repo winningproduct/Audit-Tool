@@ -17,9 +17,9 @@ export class AdminApiService {
       .toPromise();
     return JSON.parse(result['body']) as Product[];
   }
-  
-  public async getNoneProductUsers(pId: number): Promise<User[]>{
-     
+
+  public async getNoneProductUsers(pId: number): Promise<User[]> {
+
     const result = await this.httpClient.get(`${adminRoute}/${pId}/noneproductusers`).toPromise();
     return JSON.parse(result['body']) as User[];
 
