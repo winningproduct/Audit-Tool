@@ -215,6 +215,13 @@ export class Routes {
       return await this.adminService.getAllUsers();
     });
 
+    this.path.get('admin/:pid/noneproductusers', async (req, _res) => {
+      const productId = req.pathParameters ? req.pathParameters.pid : 0;
+      return await this.adminService.getNoneProductUsers(
+       Number(productId),
+      );
+    });
+
     this.path.get('admin/organizations', async (_req, _res) => {
       return await this.adminService.getAllOrganizations();
     });

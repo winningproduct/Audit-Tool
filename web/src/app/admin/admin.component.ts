@@ -54,7 +54,6 @@ export class AdminComponent implements OnInit {
     await Promise.all([
       this.getCurrentUser(),
       this.getAllProducts(),
-      this.getAllUsers(),
       this.getAllOrganizations(),
     ]);
 
@@ -65,6 +64,13 @@ export class AdminComponent implements OnInit {
 
   async getAllUsers() {
     this.users = await this.adminService.getAllUsers();
+  }
+  
+  async getNoneProductUsers(){
+
+    const { product, userIds } = this.productUserForm.value;
+
+    this.users = await this.adminService.getNoneProductUsers(product);
   }
 
   async getAllProducts() {
@@ -85,7 +91,7 @@ export class AdminComponent implements OnInit {
 
   async addUserToProject() {
     const { product, userIds } = this.productUserForm.value;
-
+    
     if (product && userIds) {
       const result = await this.adminService.addProductUser(product, userIds);
 

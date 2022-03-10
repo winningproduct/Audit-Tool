@@ -14,7 +14,6 @@ isAuth: boolean;
 
   async canActivate(): Promise<boolean> {
     const isAdmin = await this.auth.isAdmin();
-
     if (
     !isAdmin
   ) {

@@ -207,6 +207,13 @@ functions:
             arn: ${env:ARN}
       - http:
           method: get
+          path: admin/{pid}/noneproductusers
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${env:ARN}
+      - http:
+          method: get
           path: admin/organizations
           integration: lambda
           authorizer:

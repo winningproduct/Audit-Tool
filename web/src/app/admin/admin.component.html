@@ -27,7 +27,7 @@
                   <form [formGroup]="productUserForm" (ngSubmit)="addUserToProject()">
                     <div class="form-group" style="min-width:320px;">
                       Select Product
-                      <ng-select class="custom-select" [items]="products" bindLabel="name" bindValue="id"
+                      <ng-select class="custom-select" (ngModelChange)="getNoneProductUsers()" [items]="products" bindLabel="name" bindValue="id"
                         formControlName="product">
                       </ng-select>
                     </div>

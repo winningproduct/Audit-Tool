@@ -12,7 +12,7 @@ export class NavBarComponent implements OnInit {
   userName: string;
 
   constructor(public authService: AuthService) {
-    this.getUser();
+    setTimeout(() => {this.getUser()}, 3000);
   }
 
   ngOnInit() {
@@ -20,9 +20,13 @@ export class NavBarComponent implements OnInit {
 
   async getUser() {
     this.currentUser = await this.authService.getCurrentUser();
+  
     if ( this.currentUser ) {
       this.userName = this.currentUser.given_name + ' ' + this.currentUser.family_name;
       this.isAdmin = this.currentUser.admin;
+      this.isAdmin = this.isAdmin === '1';
+      
+
     } else {
       this.userName = 'User';
       this.isAdmin = false;
