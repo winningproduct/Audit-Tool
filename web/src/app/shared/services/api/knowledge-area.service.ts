@@ -21,9 +21,9 @@ export class KnowledgeAreaApiService {
     return JSON.parse(result['body']) as KnowledgeArea[];
   }
 
-  public async getQuestionCount(id: number): Promise<any> {
+  public async getQuestionCount(id: number, productId: number): Promise<any> {
     const result = await this.httpClient
-      .get(`${questionRoute}Count/knowledgeArea/${id}`)
+      .get(`${questionRoute}Count/knowledgeArea/${productId}/${id}`)
       .toPromise();
     return JSON.parse(result['body']);
   }

@@ -68,7 +68,7 @@ functions:
             arn: ${env:ARN}
       - http:
           method: get
-          path: knowledgeArea/{id}/questions
+          path: knowledgeArea/{pid}/{id}/questions
           integration: lambda
           authorizer:
             name: authorizer
@@ -82,7 +82,7 @@ functions:
             arn: ${env:ARN}
       - http:
           method: get   
-          path: questionCount/knowledgeArea/{id}
+          path: questionCount/knowledgeArea/{pid}/{id}
           integration: lambda
           authorizer:
             name: authorizer
@@ -201,6 +201,13 @@ functions:
       - http:
           method: get
           path: admin/users
+          integration: lambda
+          authorizer:
+            name: authorizer
+            arn: ${env:ARN}
+      - http:
+          method: get
+          path: admin/{pid}/noneproductusers
           integration: lambda
           authorizer:
             name: authorizer

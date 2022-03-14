@@ -7,10 +7,11 @@ import { Product as ProductEntity } from './entity/product';
 import { Phase as PhaseEntity } from './entity/phase';
 import { User as UserEntity } from './entity/user';
 import { mapDbItems, productMapper, productScoreMapper } from './dbMapper';
-import { getRepository } from 'typeorm';
+import { getRepository, SelectQueryBuilder } from 'typeorm';
 import { Question as QuestionEntity } from './entity/question';
 import { Evidence as EvidenceEntity } from './entity/evidence';
 import { Organization as OrganizationEntity } from './entity/organization';
+import { KnowledgeArea } from '@models/knowledge-area';
 
 @injectable()
 export class MySQLProductRepository implements IProductRepository {
@@ -189,9 +190,10 @@ export class MySQLProductRepository implements IProductRepository {
       const QuestionCount = await connection
         .getRepository(QuestionEntity)
         .createQueryBuilder('questions')
-        .select('COUNT(*) AS QuestionCount')
+        .select('DISTINCT questions.knowledgeAreaId, questions.orderId')
+        .orderBy('questions.knowledgeAreaId', 'ASC')
         .getRawMany();
-
+        
       return productScoreMapper(AnswerCount, QuestionCount);
     } catch (err) {
       throw err;

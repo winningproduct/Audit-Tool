@@ -90,12 +90,18 @@ export class Routes {
       );
     });
 
-    this.path.get('knowledgeArea/:id/questions', async (req, _res) => {
+    this.path.get('knowledgeArea/:pid/:id/questions', async (req, _res) => {
       const knowledgeAreaId = Number(
         req.pathParameters ? req.pathParameters.id : null,
       );
+
+      const productId =  Number(
+        req.pathParameters ? req.pathParameters.pid : null,
+      );
+
       return await this.questionDraftService.getQuestionsByKnowledgeArea(
         knowledgeAreaId,
+        productId,
       );
     });
 
@@ -209,6 +215,13 @@ export class Routes {
       return await this.adminService.getAllUsers();
     });
 
+    this.path.get('admin/:pid/noneproductusers', async (req, _res) => {
+      const productId = req.pathParameters ? req.pathParameters.pid : 0;
+      return await this.adminService.getNoneProductUsers(
+       Number(productId),
+      );
+    });
+
     this.path.get('admin/organizations', async (_req, _res) => {
       return await this.adminService.getAllOrganizations();
     });
@@ -229,10 +242,12 @@ export class Routes {
     });
 
     // For Progress Bar
-    this.path.get('questionCount/knowledgeArea/:id', async (req, _res) => {
+    this.path.get('questionCount/knowledgeArea/:pid/:id', async (req, _res) => {
       const knowledgeAreaId = req.pathParameters ? req.pathParameters.id : 0;
+      const productId = req.pathParameters ? req.pathParameters.pid : 0;
       return await this.knowledgeAreaService.getKnowledgeAreaScore(
         Number(knowledgeAreaId),
+        Number(productId),
       );
     });
 

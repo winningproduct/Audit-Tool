@@ -97,6 +97,49 @@ export class MySQLUserRepository implements IUserRepository {
     }
   }
 
+  async getNoneProductUsers(productId: Number): Promise<User[]> {
+    let connection: any;
+    let productUsers = new Set();
+    const noneProductUsers = [];
+
+    try {
+      connection = await initMysql();
+      const result = await connection
+        .getRepository(ProductEntity)
+        .createQueryBuilder('products')
+        .innerJoinAndSelect('products.users', 'users', 'products.id = :productId', {
+          productId,
+        })
+        .getRawMany();
+      const mappedUsers = mapDbItems(result, userMapper);
+
+      const users = await connection
+        .createQueryBuilder()
+        .select('users')
+        .from(UserEntity, 'users')
+        .getRawMany();
+      
+      const mappedAllusers = mapDbItems(users, userMapper);
+
+      for(const item in mappedUsers){
+        productUsers.add(mappedUsers[item].id);
+      }
+      
+      for(const item in mappedAllusers){
+        if(!productUsers.has(mappedAllusers[item].id)){
+          noneProductUsers.push(mappedAllusers[item]);
+        }
+      }
+      return noneProductUsers; 
+    } catch (err) {
+      throw err;
+    } finally {
+      if (connection != null) {
+        await connection.close();
+      }
+    }  
+  }
+
   async getAllUsers(): Promise<User[]> {
     let connection: any;
     try {

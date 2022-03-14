@@ -52,7 +52,6 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
       connection = await initMysql();
       const evidence = new EvidenceEntity();
       evidence.status = _evidence.status;
-      evidence.version = _evidence.version;
       evidence.content = _evidence.content;
 
       const productRepository = getRepository(Product);
@@ -66,6 +65,8 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
 
       const question = await questionRepository.findOneOrFail(_questionId);
       evidence.question = question;
+
+      evidence.version = question.version;
 
       const userRepository = getRepository(User);
 
@@ -169,7 +170,7 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
         .skip(pageId)
         .take(20)
         .orderBy('evidence_createdDate', 'DESC')
-        .getRawMany();
+        .getRawMany(); 
       return mapDbItems(result, evidenceMapper);
     } catch (err) {
       throw err;
@@ -257,6 +258,7 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
         .from(EvidenceEntity, 'evidence')
         .where('evidence.id = :id', { id: evidenceId })
         .getRawMany();
+
       const revertedEvidence = new EvidenceEntity();
       revertedEvidence.content = evidence[0].evidence_content;
       revertedEvidence.status = result.evidence_status;

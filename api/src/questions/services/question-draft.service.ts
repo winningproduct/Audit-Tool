@@ -14,9 +14,10 @@ export class QuestionDraftService implements IQuestionDraftService {
     this.questionRepository = _questionRepository;
   }
 
-  async getQuestionsByKnowledgeArea(knowledgeAreaId: number) {
+  async getQuestionsByKnowledgeArea(knowledgeAreaId: number, productId: number) {
     return await this.questionRepository.getQuestionsByKnowledgeAreaId(
-      knowledgeAreaId,
+      knowledgeAreaId, 
+      productId
     );
   }
 }

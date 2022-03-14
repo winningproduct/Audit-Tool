@@ -50,8 +50,8 @@ export class PhaseTileComponent implements OnInit {
     this.answerCount = 0;
     this.questionCount = 0;
     this.result.forEach(element => {
-      this.answerCount = this.answerCount + element.answerCount;
-      this.questionCount = this.questionCount + element.questionCount;
+      this.answerCount = this.answerCount + parseInt(element.answerCount, 10);
+      this.questionCount = this.questionCount + parseInt(element.questionCount, 10);
     });
 
     if (this.questionCount === 0) {
