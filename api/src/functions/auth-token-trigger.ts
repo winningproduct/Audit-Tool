@@ -6,8 +6,9 @@ export const authToken = async (
   _context: any,
   callback: any,
 ) => {
+  
   const URL =
-    'https://53ph0bulw2.execute-api.ap-south-1.amazonaws.com/dev/user/email/' +
+    'https://jagka4gir1.execute-api.ap-south-1.amazonaws.com/dev/user/email/' +
     event.request.userAttributes.email;
   let error = null;
   await new Promise((resolve, reject) => {
