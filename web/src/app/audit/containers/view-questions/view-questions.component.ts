@@ -103,7 +103,7 @@ export class ViewQuestionsComponent implements OnInit {
   }
 
   async getQuestionsByKnowledgeArea(id: number, prId: number) {
-  
+
     this.questions = await this.questionApiService.get(id, prId);
     this.length = this.questions.length;
   }

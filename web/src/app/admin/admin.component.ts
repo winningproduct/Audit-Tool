@@ -16,6 +16,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 })
 export class AdminComponent implements OnInit {
   users = [];
+  nonProductUsers = [];
   products = [];
   organizations = [];
   currentUserId = null;
@@ -55,6 +56,7 @@ export class AdminComponent implements OnInit {
       this.getCurrentUser(),
       this.getAllProducts(),
       this.getAllOrganizations(),
+      this.getAllUsers(),
     ]);
 
     if (this.users && this.products && this.organizations && this.currentUserId && this.currentUserName) {
@@ -70,7 +72,7 @@ export class AdminComponent implements OnInit {
 
     const { product, userIds } = this.productUserForm.value;
 
-    this.users = await this.adminService.getNoneProductUsers(product);
+    this.nonProductUsers = await this.adminService.getNoneProductUsers(product);
   }
 
   async getAllProducts() {
