@@ -1,20 +1,20 @@
 {
-    "dev": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-audit-tool-frontend-dev-133817-authRole",
-            "UnauthRoleArn": "arn:aws:iam::474717861439:role/amplify-audit-tool-frontend-dev-133817-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::474717861439:role/amplify-audit-tool-frontend-dev-133817-authRole",
-            "Region": "ap-south-1",
-            "DeploymentBucketName": "amplify-audit-tool-frontend-dev-133817-deployment",
-            "UnauthRoleName": "amplify-audit-tool-frontend-dev-133817-unauthRole",
-            "StackName": "amplify-audit-tool-frontend-dev-133817",
-            "StackId": "arn:aws:cloudformation:ap-south-1:474717861439:stack/amplify-audit-tool-frontend-dev-133817/dd3d1820-35db-11ea-902a-02e8bcba16c6",
-            "AmplifyAppId": "dq6nq72tbw9uc"
-        },
-        "categories": {
-            "auth": {
-                "audittoolfrontend797698d5": {}
-            }
-        }
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-audit-tool-frontend-dev-133817-authRole",
+      "UnauthRoleArn": "arn:aws:iam::474717861439:role/amplify-audit-tool-frontend-dev-133817-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::474717861439:role/amplify-audit-tool-frontend-dev-133817-authRole",
+      "Region": "ap-south-1",
+      "DeploymentBucketName": "amplify-audit-tool-frontend-dev-133817-deployment",
+      "UnauthRoleName": "amplify-audit-tool-frontend-dev-133817-unauthRole",
+      "StackName": "amplify-audit-tool-frontend-dev-133817",
+      "StackId": "arn:aws:cloudformation:ap-south-1:474717861439:stack/amplify-audit-tool-frontend-dev-133817/dd3d1820-35db-11ea-902a-02e8bcba16c6",
+      "AmplifyAppId": "dq6nq72tbw9uc"
+    },
+    "categories": {
+      "auth": {
+        "audittoolfrontend797698d5": {}
+      }
     }
+  }
 }
