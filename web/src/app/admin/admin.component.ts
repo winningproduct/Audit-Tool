@@ -122,7 +122,7 @@ export class AdminComponent implements OnInit {
         product.organizationId = organization;
         product.users = userIds;
         product.userId = this.currentUserId;
-
+  
         const result = await this.adminService.addProduct(product);
 
         if (result) {

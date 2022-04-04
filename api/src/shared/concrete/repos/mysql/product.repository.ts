@@ -7,11 +7,13 @@ import { Product as ProductEntity } from './entity/product';
 import { Phase as PhaseEntity } from './entity/phase';
 import { User as UserEntity } from './entity/user';
 import { mapDbItems, productMapper, productScoreMapper } from './dbMapper';
-import { getRepository, SelectQueryBuilder } from 'typeorm';
+import { createQueryBuilder, getRepository, SelectQueryBuilder } from 'typeorm';
 import { Question as QuestionEntity } from './entity/question';
 import { Evidence as EvidenceEntity } from './entity/evidence';
 import { Organization as OrganizationEntity } from './entity/organization';
 import { KnowledgeArea } from '@models/knowledge-area';
+import { Evidence } from '@models/evidence';
+import {getConnection} from "typeorm";
 
 @injectable()
 export class MySQLProductRepository implements IProductRepository {
@@ -39,6 +41,7 @@ export class MySQLProductRepository implements IProductRepository {
 
   // get product by user id
   async getProductsByUser(userId: number): Promise<Product[]> {
+    
     let connection: any;
     try {
       connection = await initMysql();
@@ -78,6 +81,7 @@ export class MySQLProductRepository implements IProductRepository {
   }
 
   async add(_req: any): Promise<boolean> {
+    
     let connection: any;
     try {
       connection = await initMysql();
@@ -111,19 +115,46 @@ export class MySQLProductRepository implements IProductRepository {
         productPhase.productId = result.id;
         await connection.manager.save(productPhase);
       }
+      
       // Creates New Evidence set
       // tslint:disable-next-line: prefer-for-of
+      let evidence_array = [];
       for (let index = 0; index < questions.length; index++) {
-        const evidence = new EvidenceEntity();
-        evidence.content = '';
-        evidence.status = 'null';
-        evidence.question = questions[index];
-        evidence.product = product;
-        evidence.user = user;
-        evidence.version = '1'; // Need to be changed when Question Versoning is Finalized
-        await connection.manager.save(evidence);
-      }
+        // const evidence = new EvidenceEntity();
+        // evidence.content = '';
+        // evidence.status = 'null';
+        // evidence.question = questions[index];
+        // evidence.product = product;
+        // evidence.user = user;
+        // evidence.version = '1'; // Need to be changed when Question Versoning is Finalized
+        
 
+        const obj = {
+          status: "null",
+          version: "1",//Need to be changed when Question Versoning is Finalized
+          user: user,
+          question: questions[index],
+          product: product,
+          content:"",
+        }
+
+        evidence_array.push(obj);
+      }
+      console.log(evidence_array);
+      try{
+        const result = await getConnection()
+          .createQueryBuilder()
+          .insert()
+          .into(EvidenceEntity)
+          .values(evidence_array)
+          .execute();
+        console.log(result);
+      }catch(err){
+        throw err;
+      }
+      
+      
+      console.log("Evidence done");
       // Adding users to product
       if (_req.product.users.length > 0) {
         let query = `INSERT INTO product_users__user(productId,userId) VALUES `;
@@ -139,7 +170,7 @@ export class MySQLProductRepository implements IProductRepository {
             query = query + ',';
           }
         });
-
+        console.log("Users done");
         await connection.query(query);
       }
 

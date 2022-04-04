@@ -83,7 +83,7 @@ export class MYSQLPhaseRepository implements IPhaseRepository {
         .andWhere('questions.version IN (SELECT MAX(Question_Draft.version) FROM Question_Draft WHERE Question_Draft.knowledgeAreaId = knowledgeArea.id AND questions.orderId = Question_Draft.orderId GROUP BY Question_Draft.orderId)')
         .groupBy('knowledgeArea.id')
         .getRawMany();
-      
+        
       return phaseScoreMapper(AnswerCount, QuestionCount);
     } catch (err) {
       throw err;

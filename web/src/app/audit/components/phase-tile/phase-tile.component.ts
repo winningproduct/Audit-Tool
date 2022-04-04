@@ -27,6 +27,7 @@ export class PhaseTileComponent implements OnInit {
   ) {}
 
   async ngOnInit() {
+
     await this.getProgress();
     this.knowledgeA = await this.knowledgeAreaApiService.get(
       this.phase.phaseId,
@@ -46,7 +47,7 @@ export class PhaseTileComponent implements OnInit {
   }
 
   async getProgress() {
-    this.result = await this.phaseApiService.getQuestionCount(this.productId, this.phase.id);
+    this.result = await this.phaseApiService.getQuestionCount(this.productId, this.phase.phaseId);
     this.answerCount = 0;
     this.questionCount = 0;
     this.result.forEach(element => {
@@ -59,5 +60,7 @@ export class PhaseTileComponent implements OnInit {
     } else {
       this.score = Math.trunc((this.answerCount / this.questionCount) * 100);
     }
+    
   }
 }
+

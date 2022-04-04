@@ -71,10 +71,10 @@ export class Routes {
     });
 
     this.path.get('productPhase/:id/knowledgeAreas', async (req, _res) => {
-      const productId = Number(
+      const phaseId = Number(
         req.pathParameters ? req.pathParameters.id : null,
       );
-      return await this.knowledgeAreaService.getKnowledgeAreaByPhase(productId);
+      return await this.knowledgeAreaService.getKnowledgeAreaByPhase(phaseId);
     });
 
     this.path.get('product/:id/questions/:qid/evidence', async (req, _res) => {

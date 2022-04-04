@@ -16,7 +16,7 @@ provider:
   runtime: nodejs12.x
   region: ap-south-1
   stage: ${opt:stage, 'dev'}
-  timeout: 12
+  timeout: 15
   environment:
     NODE_ENV: ${env:NODE_ENV}
     DB_NAME: ${env:DB_NAME}
