@@ -60,7 +60,7 @@ export class PhaseTileComponent implements OnInit {
     } else {
       this.score = Math.trunc((this.answerCount / this.questionCount) * 100);
     }
-    
+
   }
 }
 
