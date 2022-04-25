@@ -12,7 +12,7 @@ export class QuestionApiService {
   public async get(knowledgeAreaId: number, productId: number): Promise<Question[]> {
 
     const result = await this.httpClient
-      .get(`${knowledgeAreaRoute}/${productId}/${knowledgeAreaId}/questions`)
+      .get(`${knowledgeAreaRoute}/${knowledgeAreaId}/${productId}/questions`)
       .toPromise();
     return JSON.parse(result['body']) as Question[];
 

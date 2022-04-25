@@ -16,7 +16,7 @@ export class AuthService {
     private auth: AmplifyService,
   ) {}
   public async isAuthenticated() {
-    
+
     try {
       const session = await Auth.currentSession();
       const accessToken = session.getIdToken().getJwtToken();
@@ -62,7 +62,7 @@ export class AuthService {
   }
 
   getToken() {
-   
+
     const session = this.auth.auth();
     const token = get(session, 'user.signInUserSession.idToken.jwtToken');
     if (!token) {

@@ -23,7 +23,7 @@ export class KnowledgeAreaApiService {
 
   public async getQuestionCount(id: number, productId: number): Promise<any> {
     const result = await this.httpClient
-      .get(`${questionRoute}Count/knowledgeArea/${id}/${productId}`)
+      .get(`${questionRoute}Count/knowledgeArea/${productId}/${id}`)
       .toPromise();
     return JSON.parse(result['body']);
   }
