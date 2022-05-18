@@ -120,27 +120,27 @@ export class MySQLProductRepository implements IProductRepository {
       // tslint:disable-next-line: prefer-for-of
       let evidence_array = [];
       for (let index = 0; index < questions.length; index++) {
-        // const evidence = new EvidenceEntity();
-        // evidence.content = '';
-        // evidence.status = 'null';
-        // evidence.question = questions[index];
-        // evidence.product = product;
-        // evidence.user = user;
-        // evidence.version = '1'; // Need to be changed when Question Versoning is Finalized
+        const evidence = new EvidenceEntity();
+        evidence.content = '';
+        evidence.status = 'null';
+        evidence.question = questions[index];
+        evidence.product = product;
+        evidence.user = user;
+        evidence.version = '1'; // Need to be changed when Question Versoning is Finalized
         
 
-        const obj = {
-          status: "null",
-          version: "1",//Need to be changed when Question Versoning is Finalized
-          user: user,
-          question: questions[index],
-          product: product,
-          content:"",
-        }
+        // const obj = {
+        //   status: "null",
+        //   version: "1",//Need to be changed when Question Versoning is Finalized
+        //   user: user.id,
+        //   question: questions[index].id,
+        //   product: product.id,
+        //   content:"",
+        // }
 
-        evidence_array.push(obj);
+        evidence_array.push(evidence);
       }
-      console.log(evidence_array);
+
       try{
         const result = await getConnection()
           .createQueryBuilder()
