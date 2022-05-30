@@ -153,8 +153,6 @@ export class MySQLProductRepository implements IProductRepository {
         throw err;
       }
       
-      
-      console.log("Evidence done");
       // Adding users to product
       if (_req.product.users.length > 0) {
         let query = `INSERT INTO product_users__user(productId,userId) VALUES `;
@@ -170,7 +168,7 @@ export class MySQLProductRepository implements IProductRepository {
             query = query + ',';
           }
         });
-        console.log("Users done");
+        
         await connection.query(query);
       }
 
