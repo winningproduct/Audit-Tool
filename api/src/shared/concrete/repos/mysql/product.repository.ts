@@ -148,7 +148,7 @@ export class MySQLProductRepository implements IProductRepository {
           .into(EvidenceEntity)
           .values(evidence_array)
           .execute();
-        console.log(result);
+          
       }catch(err){
         throw err;
       }
