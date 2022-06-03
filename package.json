@@ -15,6 +15,7 @@
   "author": "WPO Dev Team",
   "license": "MIT",
   "dependencies": {
-    "concurrently": "^5.2.0"
+    "concurrently": "^5.2.0",
+    "typeorm": "^0.2.22"
   }
 }
