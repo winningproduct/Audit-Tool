@@ -4,14 +4,11 @@ import { environment } from '@environments/environment';
 
 const awsmobile = {
   aws_project_region: 'ap-south-1',
-  aws_cognito_identity_pool_id:
-    'ap-south-1:33a0a07b-1406-4ed0-a550-fe2b2bc0f812',
   aws_cognito_region: 'ap-south-1',
-  aws_user_pools_id: 'ap-south-1_V9E5upOEd',
-  aws_user_pools_web_client_id: '6r1eenlevnui1fe4epbp5vjfrn',
+  aws_user_pools_id: 'ap-south-1_FJOKBf20M',
+  aws_user_pools_web_client_id: '7iql37q16ckf38022qesmk809r',
   oauth: {
-    domain: 'auth.winningproduct.com',
-
+    domain: 'vct.auth.ap-south-1.amazoncognito.com',
     scope: [
       'phone',
       'email',
@@ -19,13 +16,9 @@ const awsmobile = {
       'openid',
       'aws.cognito.signin.user.admin',
     ],
-
     redirectSignIn: environment.redirectSignIn,
-
     redirectSignOut: environment.redirectSignOut,
-
     responseType: 'code',
-
     options: {
       AdvancedSecurityDataCollectionFlag: false,
     },

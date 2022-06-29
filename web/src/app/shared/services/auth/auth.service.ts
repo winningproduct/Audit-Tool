@@ -62,7 +62,6 @@ export class AuthService {
   }
 
   getToken() {
-
     const session = this.auth.auth();
     const token = get(session, 'user.signInUserSession.idToken.jwtToken');
     if (!token) {

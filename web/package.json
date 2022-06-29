@@ -11,7 +11,7 @@
     "e2e": "ng e2e",
     "build:aot": "ng build --aot",
     "build:prod": "ng build --prod",
-    "prod": "ng build --prod --aot"
+    "prod": "ng build --prod"
   },
   "private": true,
   "dependencies": {

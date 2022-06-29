@@ -8,8 +8,11 @@ export const authToken = async (
 ) => {
   
   const URL =
-    'https://jagka4gir1.execute-api.ap-south-1.amazonaws.com/dev/user/email/' +
+    'https://or4nw21jwa.execute-api.ap-south-1.amazonaws.com/vct/user/email/' +
     event.request.userAttributes.email;
+
+  console.log("===== USER EMAIL =====")
+  console.log(event.request.userAttributes.email);
   let error = null;
   await new Promise((resolve, reject) => {
     https
@@ -19,8 +22,10 @@ export const authToken = async (
         res.on('end', () => {
           const result = JSON.parse(buffer);
           if (result.length <= 0) {
+            console.log("=== User Not Found ====");
             error = new Error('User Not Found');
           } else {
+            console.log("=== User Found!!! ====");
             event = {
               ...event,
               response: {
@@ -43,16 +48,18 @@ export const authToken = async (
   });
 
   if (error) {
+    console.log("==== Got an error ====");
     const setUser = await new Promise((resolve, reject) => {
       const data = JSON.stringify({
         firstName: event.request.userAttributes.given_name,
         lastName: event.request.userAttributes.family_name,
         email: event.request.userAttributes.email,
       });
+      console.log(data);
       const options = {
-        hostname: '53ph0bulw2.execute-api.ap-south-1.amazonaws.com',
+        hostname: 'vctdb.cin6xcxvpdsm.ap-south-1.rds.amazonaws.com',
         port: 443,
-        path: '/dev/authTrigger/user/',
+        path: '/vct/authTrigger/user/',
         method: 'POST',
       };
       const req = https.request(options, res => {
