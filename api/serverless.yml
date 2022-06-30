@@ -22,7 +22,7 @@ provider:
     DB_NAME: auditDb
     DB_USER: wpAuditAdmin
     DB_PASSWORD: dgvshAAYGVavsW
-    DB_HOST: vctdb.cin6xcxvpdsm.ap-south-1.rds.amazonaws.com
+    DB_HOST: vct-audit-db.c29fxzr8c8sn.ap-southeast-1.rds.amazonaws.com
     DB_PORT: 3306
        
 functions:

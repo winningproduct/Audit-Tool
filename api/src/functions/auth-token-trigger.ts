@@ -57,7 +57,7 @@ export const authToken = async (
       });
       console.log(data);
       const options = {
-        hostname: 'vctdb.cin6xcxvpdsm.ap-south-1.rds.amazonaws.com',
+        hostname: 'vct-audit-db.c29fxzr8c8sn.ap-southeast-1.rds.amazonaws.com',
         port: 443,
         path: '/vct/authTrigger/user/',
         method: 'POST',
