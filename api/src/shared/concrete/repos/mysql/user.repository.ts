@@ -99,7 +99,7 @@ export class MySQLUserRepository implements IUserRepository {
 
   async getNoneProductUsers(productId: Number): Promise<User[]> {
     let connection: any;
-    let productUsers = new Set();
+    const productUsers = new Set();
     const noneProductUsers = [];
 
     try {
@@ -107,9 +107,14 @@ export class MySQLUserRepository implements IUserRepository {
       const result = await connection
         .getRepository(ProductEntity)
         .createQueryBuilder('products')
-        .innerJoinAndSelect('products.users', 'users', 'products.id = :productId', {
-          productId,
-        })
+        .innerJoinAndSelect(
+          'products.users',
+          'users',
+          'products.id = :productId',
+          {
+            productId,
+          },
+        )
         .getRawMany();
       const mappedUsers = mapDbItems(result, userMapper);
 
@@ -118,26 +123,26 @@ export class MySQLUserRepository implements IUserRepository {
         .select('users')
         .from(UserEntity, 'users')
         .getRawMany();
-      
+
       const mappedAllusers = mapDbItems(users, userMapper);
 
-      for(const item in mappedUsers){
+      for (const item in mappedUsers) {
         productUsers.add(mappedUsers[item].id);
       }
-      
-      for(const item in mappedAllusers){
-        if(!productUsers.has(mappedAllusers[item].id)){
+
+      for (const item in mappedAllusers) {
+        if (!productUsers.has(mappedAllusers[item].id)) {
           noneProductUsers.push(mappedAllusers[item]);
         }
       }
-      return noneProductUsers; 
+      return noneProductUsers;
     } catch (err) {
       throw err;
     } finally {
       if (connection != null) {
         await connection.close();
       }
-    }  
+    }
   }
 
   async getAllUsers(): Promise<User[]> {

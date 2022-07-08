@@ -170,7 +170,7 @@ export class MySQLEvidenceRepository implements IEvidenceRepository {
         .skip(pageId)
         .take(20)
         .orderBy('evidence_createdDate', 'DESC')
-        .getRawMany(); 
+        .getRawMany();
       return mapDbItems(result, evidenceMapper);
     } catch (err) {
       throw err;

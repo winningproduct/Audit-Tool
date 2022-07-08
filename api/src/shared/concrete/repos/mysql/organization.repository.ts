@@ -58,7 +58,6 @@ export class MySQLOrganizationRepository implements IOrganizationRepository {
       organization.name = _req.organization.name;
       organization.email = _req.organization.email;
       organization.phoneNumber = _req.organization.phoneNumber;
-      
 
       const result = await connection.manager.save(organization);
       return true;

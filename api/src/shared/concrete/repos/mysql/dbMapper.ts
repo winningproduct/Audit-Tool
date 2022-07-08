@@ -150,33 +150,29 @@ export function phaseScoreMapper(result1: any, result2: any) {
   let count: number = 0;
 
   for (const question of result2) {
-    for (const answer of result1) { 
-        
+    for (const answer of result1) {
       if (question.knowledgeArea_id === answer.knowledgeAreaId) {
-        
         const obj = {
           knowledgeId: question.knowledgeArea_id,
           answerCount: answer.AnswerCount,
-          questionCount: question.QuestionCount, 
+          questionCount: question.QuestionCount,
         };
 
         count++;
         score.push(obj);
         break;
       }
-      
     }
 
-    if(count == 0){
+    if (count == 0) {
       const obj = {
         knowledgeId: question.knowledgeArea_id,
         answerCount: 0,
         questionCount: question.QuestionCount,
       };
-      
+
       score.push(obj);
-    }
-    else{
+    } else {
       count = 0;
     }
   }
@@ -187,7 +183,7 @@ export function productScoreMapper(result1: any, result2: any) {
   const score: any = [];
   const obj = {
     answerCount: result1[0].AnswerCount,
-    questionCount: result2.length
+    questionCount: result2.length,
   };
   score.push(obj);
   return score;
