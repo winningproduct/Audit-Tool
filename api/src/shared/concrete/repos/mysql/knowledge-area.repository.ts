@@ -10,7 +10,6 @@ import { Phase as PhaseEntity } from './entity/phase';
 export class MySQLKnowledgeAreaRepository implements IKnowledgeAreaRepository {
   async getKnowledgeAreasByProductPhaseId(
     _productPhaseId: number,
-
   ): Promise<KnowledgeArea[]> {
     let connection: any;
     try {
@@ -22,7 +21,7 @@ export class MySQLKnowledgeAreaRepository implements IKnowledgeAreaRepository {
         .leftJoinAndSelect('phase.knowledgeAreas', 'knowledgeArea')
         .where('productPhase.id = :Id', { Id: _productPhaseId })
         .getRawMany();
-      
+
       return mapDbItems(result, knowledgeAreaMapper);
     } catch (err) {
       throw err;
@@ -53,7 +52,6 @@ export class MySQLKnowledgeAreaRepository implements IKnowledgeAreaRepository {
     }
   }
 
-  
   get(_itemId: number): import('../../../models/knowledge-area').KnowledgeArea {
     throw new Error('Method not implemented.');
   }

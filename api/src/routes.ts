@@ -71,9 +71,7 @@ export class Routes {
     });
 
     this.path.get('productPhase/:id/knowledgeAreas', async (req, _res) => {
-      const phaseId = Number(
-        req.pathParameters ? req.pathParameters.id : null,
-      );
+      const phaseId = Number(req.pathParameters ? req.pathParameters.id : null);
       return await this.knowledgeAreaService.getKnowledgeAreaByPhase(phaseId);
     });
 
@@ -95,7 +93,7 @@ export class Routes {
         req.pathParameters ? req.pathParameters.id : null,
       );
 
-      const productId =  Number(
+      const productId = Number(
         req.pathParameters ? req.pathParameters.pid : null,
       );
 
@@ -217,9 +215,7 @@ export class Routes {
 
     this.path.get('admin/:pid/noneproductusers', async (req, _res) => {
       const productId = req.pathParameters ? req.pathParameters.pid : 0;
-      return await this.adminService.getNoneProductUsers(
-       Number(productId),
-      );
+      return await this.adminService.getNoneProductUsers(Number(productId));
     });
 
     this.path.get('admin/organizations', async (_req, _res) => {

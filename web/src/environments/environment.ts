@@ -4,11 +4,12 @@
 
 export const environment = {
   production: false,
-  loginUrl: 'https://auth.winningproduct.com/'
+  loginUrl: 'https://vct.auth.ap-south-1.amazoncognito.com/'
   + 'login?response_type=code&client_id=7iql37q16ckf38022qesmk809r&redirect_uri=http://localhost:4200/auth',
   redirectSignIn: 'http://localhost:4200/auth',
   redirectSignOut: 'http://localhost:4200/auth',
-  host: window.location.origin + '/dev',
+  // host: window.location.origin + '/dev',
+  host: 'http://localhost:3000',
 };
 
 /*

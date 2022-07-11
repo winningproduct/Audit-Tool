@@ -11,8 +11,10 @@ export class KnowledgeAreaService implements IKnowledgeAreaService {
   protected questionDraftRepository: IQuestionDraftRepository;
 
   constructor(
-    @inject(TYPES.KnowledgeAreaRepository) _knowledgeAreaRepository: IKnowledgeAreaRepository,
-    @inject(TYPES.QuestionDraftRepository) _questionDraftRepository: IQuestionDraftRepository,
+    @inject(TYPES.KnowledgeAreaRepository)
+    _knowledgeAreaRepository: IKnowledgeAreaRepository,
+    @inject(TYPES.QuestionDraftRepository)
+    _questionDraftRepository: IQuestionDraftRepository,
   ) {
     this.knowledgeAreaRepository = _knowledgeAreaRepository;
     this.questionDraftRepository = _questionDraftRepository;
@@ -29,7 +31,9 @@ export class KnowledgeAreaService implements IKnowledgeAreaService {
   }
 
   async getKnowledgeAreaScore(id: number, productId: number) {
-    return await this.questionDraftRepository.getQuestionsByKnowledgeAreaId(id, productId);
+    return await this.questionDraftRepository.getQuestionsByKnowledgeAreaId(
+      id,
+      productId,
+    );
   }
-
 }

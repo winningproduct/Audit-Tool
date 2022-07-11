@@ -32,7 +32,7 @@ export class AdminService implements IAdminService {
     return await this.userRepository.getAllUsers();
   }
 
-  async getNoneProductUsers(productId: number){
+  async getNoneProductUsers(productId: number) {
     return await this.userRepository.getNoneProductUsers(productId);
   }
 
@@ -52,4 +52,3 @@ export class AdminService implements IAdminService {
     return await this.organizationRepository.add(organization);
   }
 }
-    

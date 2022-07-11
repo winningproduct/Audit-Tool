@@ -27,7 +27,7 @@ export class Question {
 
   @Column()
   version!: string;
-  
+
   @ManyToOne(
     type => KnowledgeArea,
     knowledgeArea => knowledgeArea.questions,
@@ -48,5 +48,4 @@ export class Question {
     evidence => evidence.question,
   )
   evidences!: Evidence[];
-
 }
