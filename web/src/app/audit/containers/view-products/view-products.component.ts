@@ -24,10 +24,10 @@ export class ViewProductsComponent implements OnInit {
 
   async ngOnInit() {
     this.showSpinner();
-    const user = await this.auth.getCurrentUser();
-    this.userName = user.given_name;
+    const user = await this.auth.getCurrentUserDetails();
+    this.userName = user[0].firstName;
     if ( user ) {
-      this.userId = user.userId;
+      this.userId = user[0].id.toString();
     }
     this.products = await this.productApi.get(this.userId);
     this.hideSpinner();

@@ -15,11 +15,11 @@ isAuth: boolean;
   async canActivate(): Promise<boolean> {
     const isAdmin = await this.auth.isAdmin();
     if (
-    !isAdmin
+    isAdmin == 1
   ) {
-    window.location.href = environment.loginUrl;
-  }
     return true;
+  } else {  window.location.href = environment.loginUrl; }
+
 }
 
   async logIn() {

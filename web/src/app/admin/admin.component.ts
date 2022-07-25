@@ -84,10 +84,10 @@ export class AdminComponent implements OnInit {
   }
 
   async getCurrentUser() {
-    const user = await this.authService.getCurrentUser();
+    const user = await this.authService.getCurrentUserDetails();
     if (user) {
-      this.currentUserId = user.userId;
-      this.currentUserName = user.given_name;
+      this.currentUserId = user[0].id;
+      this.currentUserName = user[0].firstName;
     }
   }
 
