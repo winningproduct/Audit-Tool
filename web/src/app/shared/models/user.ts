@@ -6,4 +6,5 @@ export class User {
   public email: string;
   public createdDate: Date;
   public phoneNumber: string;
+  public isAdmin: number;
 }

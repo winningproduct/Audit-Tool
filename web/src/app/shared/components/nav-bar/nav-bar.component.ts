@@ -19,12 +19,12 @@ export class NavBarComponent implements OnInit {
   }
 
   async getUser() {
-    this.currentUser = await this.authService.getCurrentUser();
+    this.currentUser = await this.authService.getCurrentUserDetails();
 
     if ( this.currentUser ) {
-      this.userName = this.currentUser.given_name + ' ' + this.currentUser.family_name;
-      this.isAdmin = this.currentUser.admin;
-      this.isAdmin = this.isAdmin === '1';
+      this.userName = this.currentUser[0].firstName + ' ' + this.currentUser[0].lastName;
+      this.isAdmin = this.currentUser[0].isAdmin;
+      this.isAdmin = this.isAdmin === 1;
 
 
     } else {

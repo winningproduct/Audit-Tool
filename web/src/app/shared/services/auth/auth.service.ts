@@ -36,28 +36,37 @@ export class AuthService {
     try {
       const session = await Auth.currentSession();
       const idToken = session.getIdToken().decodePayload();
-      return idToken;
+      return (idToken);
+    } catch (err) {}
+  }
+
+  public async getCurrentUserDetails() {
+    try {
+      const idToken = await this.getCurrentUser();
+      const user = await this.userApiService.get(idToken.email);
+      return user;
     } catch (err) {}
   }
 
   public async getCurrentUserId() {
     try {
-      const user = await this.getCurrentUser();
-      return user['userId'];
+      const user = await this.getCurrentUserDetails();
+      return user[0].id;
     } catch (err) {}
   }
 
   public async getCurrentUserEmail() {
     try {
-      const user = await this.getCurrentUser();
-      return user['email'];
+      const user = await this.getCurrentUserDetails();
+      return user[0].email;
     } catch (err) {}
   }
 
   public async isAdmin() {
     try {
-      const user = await this.getCurrentUser();
-      return user['admin'];
+      const user = await this.getCurrentUserDetails();
+      return user[0].isAdmin;
+
     } catch (err) {}
   }
 
